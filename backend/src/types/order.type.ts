@@ -7,3 +7,7 @@ export interface CreateOrder{
         quantity: number
     }[]
 }
+
+export interface UpdateOrder{
+    status: OrderType
+}

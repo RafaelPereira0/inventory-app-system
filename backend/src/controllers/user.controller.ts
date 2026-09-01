@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import userService from "../services/user.service";
-import { userSchema } from "../schemas/userSchema";
+import { userSchema, userUpdateSchema } from "../schemas/userSchema";
 
 class UserController {
 
@@ -62,7 +62,7 @@ class UserController {
     async updateUser(req: Request, res: Response){
         try{
             const id = Number(req.params.id)
-            const data = req.body
+            const data = userUpdateSchema.parse(req.body)
 
             await userService.updateUser(id, data)
 

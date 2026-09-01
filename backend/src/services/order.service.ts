@@ -1,4 +1,4 @@
-import { CreateOrder } from "../types/order.type";
+import { CreateOrder, UpdateOrder } from "../types/order.type";
 import prisma from "../../lib/prisma"
 import stockMovementService from "./stockMovement.service";
 
@@ -148,6 +148,32 @@ class OrderService {
 
             return canceled
         })
+    }
+
+    async update(orderId: number, data: UpdateOrder){
+        const existsOrder = await prisma.order.findUnique({
+            where: {
+                id: orderId
+            }
+        })
+
+        if(!existsOrder) throw new Error("Pedido não encontrado")
+        if(existsOrder.status === "DELIVERED") throw new Error("Pedido já foi entregue")
+        if(existsOrder.status === "CANCELLED") throw new Error("Pedido já foi cancelado")
+        if(existsOrder.status === "PENDING" && data.status !== "PAID" && data.status !== "CANCELLED") throw new Error("Transição inválida")
+        if(existsOrder.status === "PAID" && data.status !== "DELIVERED" && data.status !== "CANCELLED") throw new Error("Transição inválida")
+        
+        
+        const updated = await prisma.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                status: data.status
+            }
+        })
+
+        return updated
     }
 }
 
