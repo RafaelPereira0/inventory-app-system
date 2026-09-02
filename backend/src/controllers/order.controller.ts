@@ -7,8 +7,8 @@ class OrderController {
     async createOrder(req: Request, res: Response) {
         try {
             const data = orderCreateSchema.parse(req.body)
-
-            const newOrder = await orderService.create(data)
+            const userId = req.user!.id
+            const newOrder = await orderService.create(data, userId)
 
             return res.status(201).json({ message: "Pedido criado com sucesso", result: newOrder })
         } catch (err: any) {

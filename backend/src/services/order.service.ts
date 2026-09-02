@@ -4,10 +4,10 @@ import stockMovementService from "./stockMovement.service";
 
 class OrderService {
 
-    async create(data: CreateOrder) {
+    async create(data: CreateOrder, userId: number) {
         const user = await prisma.user.findUnique({
             where: {
-                id: data.userId
+                id: userId
             }
         })
 
@@ -38,7 +38,7 @@ class OrderService {
         return await prisma.$transaction(async (tx) => {
             const order = await tx.order.create({
                 data: {
-                    userId: data.userId,
+                    userId: userId,
                     total: total,
                     status: "PENDING"
                 }
