@@ -1,4 +1,5 @@
 import prisma from "../../lib/prisma";
+import redis from "../config/redis";
 import {  ProductType } from "../types/product.type";
 
 class ProductService{
@@ -17,7 +18,7 @@ class ProductService{
 
         if(alreadyExist) throw new Error("Produto já cadastrado")
 
-        return await prisma.product.create({
+        const newProduct =  await prisma.product.create({
             data: {
                 name: product.name,
                 description: product.description,
@@ -25,6 +26,10 @@ class ProductService{
                 categoryId: product.categoryId
             }
         })
+
+        await redis.del("products")
+
+        return newProduct
     }
 
     async findById(productId: number) {
@@ -55,7 +60,12 @@ class ProductService{
 }
 
     async findAll() {
-    return await prisma.product.findMany({
+
+    const cachedProduct = await redis.get("products")
+
+    if(cachedProduct) return JSON.parse(cachedProduct)
+
+    const products = await prisma.product.findMany({
         select: {
             id: true,
             name: true,
@@ -75,6 +85,10 @@ class ProductService{
             id: "asc"
         }
     })
+
+    await redis.set("products", JSON.stringify(products), { EX: 60})
+    
+    return products
 }
 
     async delete(productId: number){
@@ -87,6 +101,8 @@ class ProductService{
                 id: productId
             }
         })
+
+        await redis.del("products")
     }
 
     async update(productId: number, data: ProductType){
@@ -100,6 +116,8 @@ class ProductService{
             },
             data
         })
+
+        await redis.del("products")
 
         return updatedProduct
     }
