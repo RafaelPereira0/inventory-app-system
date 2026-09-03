@@ -6,3 +6,10 @@ export interface ProductType{
     price: number
     categoryId: number
 }
+
+export interface UpdateProductType{
+    name?: string,
+    description?: string,
+    price?: number,
+    categoryId? : number
+}

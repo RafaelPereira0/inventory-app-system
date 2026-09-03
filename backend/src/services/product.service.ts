@@ -1,11 +1,14 @@
 import prisma from "../../lib/prisma";
 import redis from "../config/redis";
-import {  ProductType } from "../types/product.type";
+import {  ProductType, UpdateProductType } from "../types/product.type";
 
 class ProductService{
 
     async createProduct(product: ProductType){
         const productName = product.name
+
+        if(!productName) throw new Error("Nome do produto obrigatório")
+        if(product.price <= 0) throw new Error("Preço inválido")
 
         const alreadyExist = await prisma.product.findFirst({
             where: {
@@ -17,6 +20,14 @@ class ProductService{
         })
 
         if(alreadyExist) throw new Error("Produto já cadastrado")
+
+        const categoryExistis = await prisma.category.findUnique({
+            where: {
+                id: product.categoryId
+            }
+        })
+
+        if(!categoryExistis) throw new Error("Categoria não encontrada")
 
         const newProduct =  await prisma.product.create({
             data: {
@@ -105,10 +116,12 @@ class ProductService{
         await redis.del("products")
     }
 
-    async update(productId: number, data: ProductType){
+    async update(productId: number, data: UpdateProductType){
         const existsProduct = await this.findById(productId)
 
         if(!existsProduct) throw new Error("Produto não encontrado")
+
+        if(Object.keys(data).length === 0)throw new Error("Nenhum dado para atualizar")
 
         const updatedProduct = await prisma.product.update({
             where: {
