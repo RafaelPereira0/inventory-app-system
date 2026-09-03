@@ -3,6 +3,9 @@ import { CreateStockMovement } from "../types/stockMovement.type"
 
 class StockMovementService {
     async createMovement(data: CreateStockMovement) {
+
+        if(data.quantity <= 0) throw new Error("Quantidade inválida")
+
         const product = await prisma.product.findUnique({
             where: {
                 id: data.productId
@@ -45,7 +48,7 @@ class StockMovementService {
         })
     }
 
-    async findAll(){
+    async findAll() {
         const movements = await prisma.stockMovement.findMany({
             select: {
                 id: true,
@@ -62,8 +65,9 @@ class StockMovementService {
             }
         })
 
-        if(!movements) throw new Error("Nenhuma movimentação encontrada")
-
+        if (movements.length === 0) {
+            throw new Error("Nenhuma movimentação encontrada")
+        }
         return movements
     }
 }
