@@ -64,7 +64,7 @@ class CategoryService {
 
         if (!existsCategory) throw new Error("Categoria não encontrada")
 
-        await prisma.category.delete({
+        return await prisma.category.delete({
             where: {
                 id: categoryId
             }
@@ -75,6 +75,8 @@ class CategoryService {
         const existsCategory = await this.findById(categoryId)
 
         if (!existsCategory) throw new Error("Categoria não encontrada")
+        if(!data.name || data.name.length === 0)throw new Error("Nenhum dado para atualizar")  
+
 
         return await prisma.category.update({
             where: {

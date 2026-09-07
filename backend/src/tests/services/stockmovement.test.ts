@@ -168,4 +168,5 @@ describe("StockMovement tests", () => {
         await expect(stockMovementService.createMovement(movement))
             .rejects.toThrow("Quantidade inválida")
     })
+
 })
