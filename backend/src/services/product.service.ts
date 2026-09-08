@@ -71,37 +71,49 @@ class ProductService{
 }
 
     async findAll() {
+    try {
+        console.log("1 - entrando no findAll")
 
-    const cachedProduct = await redis.get("products")
+        const cachedProduct = await redis.get("products")
 
-    if(cachedProduct) return JSON.parse(cachedProduct)
+        console.log("2 - redis respondeu:", cachedProduct)
 
-    const products = await prisma.product.findMany({
-        select: {
-            id: true,
-            name: true,
-            description: true,
-            price: true,
-            quantity: true,
-            category: {
-                select: {
-                    id: true,
-                    name: true
-                }
+        if (cachedProduct) return JSON.parse(cachedProduct)
+
+        const products = await prisma.product.findMany({
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                price: true,
+                quantity: true,
+                category: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                },
+                createdAt: true,
+                updatedAt: true
             },
-            createdAt: true,
-            updatedAt: true
-        },
-        orderBy: {
-            id: "asc"
-        }
-    })
+            orderBy: {
+                id: "asc"
+            }
+        })
 
-    await redis.set("products", JSON.stringify(products), { EX: 60})
-    
-    return products
+        console.log("3 - prisma respondeu:", products)
+
+        await redis.set("products", JSON.stringify(products), { EX: 60 })
+
+        console.log("4 - cache salvo")
+
+        return products
+
+    } catch (err) {
+        console.error("ERRO NO FIND ALL:", err)
+        throw err
+    }
 }
-
     async delete(productId: number){
         const existsProduct = await this.findById(productId)
 

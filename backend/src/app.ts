@@ -1,5 +1,7 @@
 import cors from 'cors'
 import express from 'express'
+import swaggerUi from "swagger-ui-express"
+import swaggerSpec from "./config/swagger"
 import userRoutes from './routes/user.route'
 import categoryRoutes from './routes/category.route'
 import productRoutes from './routes/product.route'
@@ -16,6 +18,7 @@ app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
 }))
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/user",userRoutes)
 app.use("/login",authRoutes)
