@@ -21,7 +21,7 @@ class UserController {
             const data = userSchema.parse(req.body)
             const newManager = await userService.createManager(data)
 
-            return res.setMaxListeners(201).json({message: "Gerente cadastrado com sucesso", result: [newManager.name, newManager.email]})
+            return res.status(201).json({message: "Gerente cadastrado com sucesso", result: [newManager.name, newManager.email]})
         }catch(err: any){
             return res.status(400).json({err: err.message})
         }
