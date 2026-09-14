@@ -11,7 +11,7 @@ export const AuthContext = createContext({} as AuthContextData)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null)
     const [token, setToken] = useState<string | null>(null)
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true)
 
     const isAuthenticated = !!token
 
@@ -23,11 +23,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(user)
         setToken(accessToken)
         setAccessToken(accessToken)
+
+        return user
     }
 
     const logout = async () => {
         await api.post("/login/logout")
-
         setUser(null)
         setToken(null)
         setAccessToken(null)
@@ -54,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         restore()
-    })
+    },[])
 
     return(
         <AuthContext.Provider
@@ -66,6 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 login,
                 logout
             }}>
+                {children}
         </AuthContext.Provider>
     )
 }

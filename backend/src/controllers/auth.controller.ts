@@ -35,6 +35,17 @@ class AuthController {
             return res.status(401).json({error: err.message})
         }
     }
+
+    async logout(req: Request, res: Response){
+        res.clearCookie("refreshToken", {
+            httpOnly: true,
+            sameSite: 'lax'
+        })
+
+        return res.status(200).json({
+            message: "deslogado com sucesso"
+        })
+    }
 }
 
 export default new AuthController()

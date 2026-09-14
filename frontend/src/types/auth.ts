@@ -14,6 +14,6 @@ export interface AuthContextData {
     isAuthenticated: boolean;
     loading: boolean;
 
-    login(credentials: Login): Promise<void>;
+    login(credentials: Login): Promise<User>;
     logout(): void;
 }

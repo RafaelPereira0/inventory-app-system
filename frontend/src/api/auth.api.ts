@@ -12,6 +12,6 @@ export async function authLogin(creadentials: Login) {
 
 export async function refreshToken() {
     const response = await api.post('/login/refresh')
-
+    
     return response.data
 }

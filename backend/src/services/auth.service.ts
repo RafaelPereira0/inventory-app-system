@@ -48,7 +48,7 @@ class AuthService{
     async refresh(refreshToken: string): Promise<{newAccessToken: string, user: refreshUser}>{
         return new Promise((resolve, reject) => {
             jwt.verify(refreshToken, REFRESH_TOKEN!, async (err: any, decoded: any) => {
-                if(err) reject("Sessão inválida")
+                if(err) return reject("Sessão inválida")
                 
                 const user = await userService.findById(decoded.id)
                 if(!user) reject("Usuário não encontrado")
