@@ -2,7 +2,8 @@
     width: 320px;
     min-height: 190px;
 
-    background: #ffffff;
+    background: #fff;
+
     border: 1px solid #e5e7eb;
     border-radius: 12px;
 
@@ -12,42 +13,40 @@
     flex-direction: column;
     justify-content: space-between;
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
 
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: .2s;
 }
 
 .product-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
-}
 
-/* Informações */
+    box-shadow: 0 6px 18px rgba(0, 0, .10);
+}
 
 .product-info h2 {
     margin: 0 0 8px;
 
     font-size: 19px;
     font-weight: 600;
-
-    color: #111827;
 }
 
-.product-info > div:not(.product-details) {
+.product-description {
     margin-bottom: 18px;
 
     color: #6b7280;
-    font-size: 14px;
 
-    min-height: 20px;
+    font-size: 14px;
 }
 
 .product-details {
     display: flex;
     flex-direction: column;
+
     gap: 8px;
 
     font-size: 14px;
+
     color: #4b5563;
 }
 
@@ -56,48 +55,47 @@
     justify-content: space-between;
 }
 
-/* Preço */
-
 .product-details span:nth-child(2) {
     font-size: 17px;
     font-weight: 700;
+
     color: #111827;
 }
 
-/* Estoque baixo */
-
-.product-details .low-stock {
+.low-stock {
     color: #dc2626;
+
     font-weight: 600;
 }
 
-/* Botões */
-
 .product-actions {
-    display: flex;
-    gap: 10px;
-
     margin-top: 20px;
 }
 
-.product-actions button {
-    flex: 1;
+.view-button {
+    width: 100%;
+    padding: 10px 14px;
 
-    padding: 9px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
 
-    border: none;
-    border-radius: 7px;
+    background: #f9fafb;
+    color: #374151;
 
     font-size: 14px;
     font-weight: 600;
 
     cursor: pointer;
+
+    transition: all .2s ease;
 }
 
-/* Responsivo */
+.view-button:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    color: #111827;
+}
 
-@media (max-width: 600px) {
-    .product-card {
-        width: 100%;
-    }
+.view-button:active {
+    transform: scale(.98);
 }

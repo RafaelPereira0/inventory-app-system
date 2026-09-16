@@ -12,6 +12,18 @@ export interface ProductType {
 
 export interface ProductTypeProps{
     product: ProductType,
-    // onEdit: (product: ProductType) => void,
-    // onDelete: (id: number) => void
+    onView: (product: ProductType) => void
+}
+
+export interface ProductModelProps{
+    product: ProductType,
+    close: () => void
+}
+
+export interface UpdateProductType{
+    name? :string,
+    description?: string,
+    price?: number,
+    quantity?: number,
+    categoryId?: number
 }

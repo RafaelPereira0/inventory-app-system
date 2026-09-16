@@ -3,8 +3,7 @@ import type {ProductTypeProps} from '../../types/products'
 
 export default function ProductCard({
     product,
-    // onEdit,
-    // onDelete
+    onView
 }: ProductTypeProps) {
     return (
         <div className="product-card">
@@ -30,19 +29,9 @@ export default function ProductCard({
             </div>
 
             <div className="product-actions">
-                {/* <button
-                    className="edit-button"
-                    onClick={() => onEdit(product)}
-                >
-                    Editar
+                <button onClick={() => onView(product)} className="view-button">
+                    Ver Produto
                 </button>
-
-                <button
-                    className="delete-button"
-                    onClick={() => onDelete(product.id)}
-                >
-                    Excluir
-                </button> */}
             </div>
 
         </div>
