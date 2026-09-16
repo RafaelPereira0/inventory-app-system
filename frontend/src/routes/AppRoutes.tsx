@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "../pages/Dashboard";
 import Layout from "../components/Layout";
+import Products from "../pages/Products";
 
 export default function AppRoutes(){
     return (
@@ -12,6 +13,7 @@ export default function AppRoutes(){
                 <Route element={<PrivateRoutes/>}>
                     <Route element={<Layout/>}>
                         <Route path="/" element={<Dashboard/>}/>
+                        <Route path="/products" element={<Products/>}/>
                     </Route>
                 </Route>
 

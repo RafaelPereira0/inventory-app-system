@@ -19,7 +19,7 @@ export default function SideBar() {
                     Dashboard
                 </NavLink>
 
-                <NavLink to="/services" className="link">
+                <NavLink to="/products" className="link">
                     Produtos
                 </NavLink>
 

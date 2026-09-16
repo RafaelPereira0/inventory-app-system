@@ -72,11 +72,8 @@ class ProductService{
 
     async findAll() {
     try {
-        console.log("1 - entrando no findAll")
 
         const cachedProduct = await redis.get("products")
-
-        console.log("2 - redis respondeu:", cachedProduct)
 
         if (cachedProduct) return JSON.parse(cachedProduct)
 
