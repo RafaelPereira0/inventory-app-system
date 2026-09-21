@@ -16,7 +16,7 @@ export interface ProductTypeProps{
 }
 
 export interface ProductModelProps{
-    product: ProductType,
+    product?: ProductType,
     close: () => void
 }
 
@@ -26,4 +26,12 @@ export interface UpdateProductType{
     price?: number,
     quantity?: number,
     categoryId?: number
+}
+
+export interface CreateProductType {
+    name: string
+    description?: string
+    price: number
+    quantity: number
+    categoryId: number
 }

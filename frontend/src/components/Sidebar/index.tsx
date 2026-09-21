@@ -24,7 +24,7 @@ export default function SideBar() {
                 </NavLink>
 
                 {user?.role === "ADMIN" && (
-                    <NavLink to="/agenda" className="link">
+                    <NavLink to="/categories" className="link">
                         Caregorias
                     </NavLink>
                 )}

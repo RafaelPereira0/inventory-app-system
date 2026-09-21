@@ -1,4 +1,4 @@
-import type { UpdateProductType } from "../types/products";
+import type { CreateProductType, UpdateProductType } from "../types/products";
 import { api } from "./axios";
 
 export async function getProductsApi() {
@@ -9,6 +9,18 @@ export async function getProductsApi() {
 
 export async function updateProductApi(id: number, data: UpdateProductType) {
     const response = await api.put(`/product/${id}`, data)
+
+    return response.data
+}
+
+export async function deleteProductApi(id: number) {
+    const response = await api.post(`/product/${id}`)
+
+    return response.data
+}
+
+export async function createProductApi(data: CreateProductType) {
+    const response = await api.post("/product/create", data)
 
     return response.data
 }

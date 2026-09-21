@@ -1,6 +1,16 @@
+import { useState } from 'react';
+import { getProducts } from '../../hooks/getProducts';
 import './styles.css'
 
 export default function Dashboard() {
+
+    const {
+        data: products,
+        isLoading,
+        isError
+    } = getProducts()
+
+    const [lowStocks, setLowStock] = useState(0)
 
     return (
         <div className="dashboard">
@@ -15,7 +25,7 @@ export default function Dashboard() {
 
                 <div className="card">
                     <span className="card-title">Produtos</span>
-                    <strong>248</strong>
+                    <strong>{products?.length}</strong>
                     <p>Total de produtos</p>
                 </div>
 
@@ -27,7 +37,10 @@ export default function Dashboard() {
 
                 <div className="card">
                     <span className="card-title">Estoque baixo</span>
-                    <strong>12</strong>
+                    <strong>{
+                        products?.filter((product) => product.quantity < 10)
+                            .length ?? 0
+                    }</strong>
                     <p>Produtos precisam de atenção</p>
                 </div>
 
@@ -110,49 +123,25 @@ export default function Dashboard() {
                         <button>Ver produtos</button>
                     </div>
 
-                    <div className="stock-item">
-                        <div>
-                            <strong>Notebook Dell</strong>
-                            <span>Eletrônicos</span>
+
+                    {products?.slice(0, 4).map((product) => (
+                        <div className="stock-item">
+                            <div>
+                                <strong>
+                                    {product.name}
+                                </strong>
+                                <span>
+                                    {product.category.name}
+                                </span>
+                            </div>
+                            <span
+                                className={product.quantity < 10 ? "stock-low" : "stock-ok"}
+                            >
+                                {product.quantity}
+                            </span>
                         </div>
+                    ))}
 
-                        <span className="stock-low">
-                            3 unidades
-                        </span>
-                    </div>
-
-                    <div className="stock-item">
-                        <div>
-                            <strong>Mouse Logitech</strong>
-                            <span>Eletrônicos</span>
-                        </div>
-
-                        <span className="stock-ok">
-                            25 unidades
-                        </span>
-                    </div>
-
-                    <div className="stock-item">
-                        <div>
-                            <strong>Teclado Mecânico</strong>
-                            <span>Eletrônicos</span>
-                        </div>
-
-                        <span className="stock-ok">
-                            18 unidades
-                        </span>
-                    </div>
-
-                    <div className="stock-item">
-                        <div>
-                            <strong>Headset</strong>
-                            <span>Eletrônicos</span>
-                        </div>
-
-                        <span className="stock-low">
-                            2 unidades
-                        </span>
-                    </div>
                 </div>
 
             </div>

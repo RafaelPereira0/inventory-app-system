@@ -1,51 +1,51 @@
 import { useState } from "react"
 
-import ProductCard from "../../components/ProductCard"
 import ProductModal from "../../components/ProductModal"
 
-import { getProducts } from "../../hooks/getProducts"
-
-import type { ProductType } from "../../types/products"
 
 import "./styles.css"
+import { getCategories } from "../../hooks/useCategory"
+import CategoryCard from "../../components/CategoryCard"
+import type { CategoryType } from "../../types/category"
+import CategoryModal from "../../components/CategoryModal"
 
 
-export default function Products() {
+export default function Categories() {
 
     const {
-        data: products,
+        data: categories,
         isLoading,
         isError
-    } = getProducts()
+    } = getCategories()
 
 
-    const [selectedProduct, setSelectedProduct] =
-        useState<ProductType | null>(null)
+    const [selectedCategory, setSelectedCategory] =
+        useState<CategoryType | null>(null)
 
     const [isCreatingMode, setIsCreatringMode] = useState(false)
 
 
-    function handleView(product: ProductType) {
+    function handleView(category: CategoryType) {
 
-        setSelectedProduct(product)
+        setSelectedCategory(category)
 
     }
 
 
     function handleCloseModal() {
 
-        setSelectedProduct(null)
+        setSelectedCategory(null)
 
     }
 
 
     if (isLoading) {
-        return <div>Carregando produtos...</div>
+        return <div>Carregando categorias...</div>
     }
 
 
     if (isError) {
-        return <div>Erro ao carregar produtos.</div>
+        return <div>Erro ao carregar categorias.</div>
     }
 
 
@@ -56,21 +56,21 @@ export default function Products() {
             <div className="products-header">
 
                 <h1>
-                    Produtos
+                    Categorias
                 </h1>
                 <button className="new-product-button" onClick={() => setIsCreatringMode(true)}>
-                    Novo Produto
+                    Nova Categoria
                 </button>
             </div>
 
 
             <div className="products-grid">
 
-                {products?.map((product) => (
+                {categories?.map((category) => (
 
-                    <ProductCard
-                        key={product.id}
-                        product={product}
+                    <CategoryCard
+                        key={category.id}
+                        category={category}
                         onView={handleView}
                     />
 
@@ -79,10 +79,10 @@ export default function Products() {
             </div>
 
 
-            {selectedProduct && (
+            {selectedCategory && (
 
-                <ProductModal
-                    product={selectedProduct}
+                <CategoryModal
+                    category={selectedCategory}
                     close={handleCloseModal}
                 />
 
@@ -90,7 +90,7 @@ export default function Products() {
 
             {
                 isCreatingMode && (
-                    <ProductModal
+                    <CategoryModal
                         close={() => setIsCreatringMode(false)}
                     />
                 )

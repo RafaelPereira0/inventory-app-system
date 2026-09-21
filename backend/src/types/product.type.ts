@@ -4,7 +4,8 @@ export interface ProductType{
     name: string
     description?: string
     price: number
-    categoryId: number
+    categoryId: number,
+    quantity: number
 }
 
 export interface UpdateProductType{

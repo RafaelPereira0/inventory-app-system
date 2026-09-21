@@ -1,14 +1,14 @@
 import prisma from "../../lib/prisma";
 import redis from "../config/redis";
-import {  ProductType, UpdateProductType } from "../types/product.type";
+import { ProductType, UpdateProductType } from "../types/product.type";
 
-class ProductService{
+class ProductService {
 
-    async createProduct(product: ProductType){
+    async createProduct(product: ProductType) {
         const productName = product.name
 
-        if(!productName) throw new Error("Nome do produto obrigatório")
-        if(product.price <= 0) throw new Error("Preço inválido")
+        if (!productName) throw new Error("Nome do produto obrigatório")
+        if (product.price <= 0) throw new Error("Preço inválido")
 
         const alreadyExist = await prisma.product.findFirst({
             where: {
@@ -19,7 +19,7 @@ class ProductService{
             }
         })
 
-        if(alreadyExist) throw new Error("Produto já cadastrado")
+        if (alreadyExist) throw new Error("Produto já cadastrado")
 
         const categoryExistis = await prisma.category.findUnique({
             where: {
@@ -27,14 +27,15 @@ class ProductService{
             }
         })
 
-        if(!categoryExistis) throw new Error("Categoria não encontrada")
+        if (!categoryExistis) throw new Error("Categoria não encontrada")
 
-        const newProduct =  await prisma.product.create({
+        const newProduct = await prisma.product.create({
             data: {
                 name: product.name,
                 description: product.description,
                 price: product.price,
-                categoryId: product.categoryId
+                categoryId: product.categoryId,
+                quantity: product.quantity ? product.quantity : 0
             }
         })
 
@@ -44,40 +45,10 @@ class ProductService{
     }
 
     async findById(productId: number) {
-    const product = await prisma.product.findUnique({
-        where: {
-            id: productId
-        },
-        select: {
-            id: true,
-            name: true,
-            description: true,
-            price: true,
-            quantity: true,
-            category: {
-                select: {
-                    id: true,
-                    name: true
-                }
+        const product = await prisma.product.findUnique({
+            where: {
+                id: productId
             },
-            createdAt: true,
-            updatedAt: true
-        }
-    })
-
-    if (!product) throw new Error("Produto não encontrado")
-
-    return product
-}
-
-    async findAll() {
-    try {
-
-        const cachedProduct = await redis.get("products")
-
-        if (cachedProduct) return JSON.parse(cachedProduct)
-
-        const products = await prisma.product.findMany({
             select: {
                 id: true,
                 name: true,
@@ -92,45 +63,117 @@ class ProductService{
                 },
                 createdAt: true,
                 updatedAt: true
-            },
-            orderBy: {
-                id: "asc"
             }
         })
 
-        console.log("3 - prisma respondeu:", products)
+        if (!product) throw new Error("Produto não encontrado")
 
-        await redis.set("products", JSON.stringify(products), { EX: 60 })
-
-        console.log("4 - cache salvo")
-
-        return products
-
-    } catch (err) {
-        console.error("ERRO NO FIND ALL:", err)
-        throw err
+        return product
     }
-}
-    async delete(productId: number){
-        const existsProduct = await this.findById(productId)
 
-        if(!existsProduct) throw new Error("Producto não encontrado")
+    async findByCategory(categoryId: number){
+        try{
+            const product = await prisma.product.findFirst({
+                where:{
+                    categoryId: categoryId
+                }
+            })
 
-        await prisma.product.delete({
+            if(product) return true
+        }catch(err){
+            throw err
+        }
+    }
+
+    async findAll() {
+        try {
+
+            const cachedProduct = await redis.get("products")
+
+            if (cachedProduct) return JSON.parse(cachedProduct)
+
+            const products = await prisma.product.findMany({
+                select: {
+                    id: true,
+                    name: true,
+                    description: true,
+                    price: true,
+                    quantity: true,
+                    category: {
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    },
+                    createdAt: true,
+                    updatedAt: true
+                },
+                where: {
+                    isActive: true
+                },
+                orderBy: {
+                    id: "asc"
+                }
+            })
+
+
+            await redis.set("products", JSON.stringify(products), { EX: 60 })
+
+
+            return products
+
+        } catch (err) {
+            throw err
+        }
+    }
+    async delete(id: number) {
+
+        const existsProduct = await prisma.product.findUnique({
             where: {
-                id: productId
+                id
+            }
+        })
+
+        if (!existsProduct) {
+            throw new Error("Produto não encontrado")
+        }
+
+        if (existsProduct.quantity > 0) {
+            throw new Error(
+                "Não é possível excluir um produto que possui estoque."
+            )
+        }
+
+        const movements = await prisma.stockMovement.count({
+            where: {
+                productId: id
+            }
+        })
+
+        if (movements > 0) {
+            throw new Error(
+                "Não é possível excluir um produto que possui movimentações de estoque."
+            )
+        }
+
+        await prisma.product.update({
+            where: {
+                id
+            },
+            data: {
+                isActive: false
             }
         })
 
         await redis.del("products")
     }
 
-    async update(productId: number, data: UpdateProductType){
+    async update(productId: number, data: UpdateProductType) {
         const existsProduct = await this.findById(productId)
 
-        if(!existsProduct) throw new Error("Produto não encontrado")
+        if (!existsProduct) throw new Error("Produto não encontrado")
 
-        if(Object.keys(data).length === 0)throw new Error("Nenhum dado para atualizar")
+        if (Object.keys(data).length === 0) throw new Error("Nenhum dado para atualizar")
 
         const updatedProduct = await prisma.product.update({
             where: {

@@ -44,7 +44,9 @@ class CategoryController {
 
             return res.status(200).json({message: "Categoria excluída com sucesso"})
         }catch(err: any){
-
+            return res.status(400).json({
+                message: err instanceof Error ? err.message : "Erro ao excluir categoria"
+            })
         }
     }
 

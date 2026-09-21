@@ -1,5 +1,6 @@
 import prisma from '../../lib/prisma'
 import { category } from '../types/category.type'
+import productService from './product.service'
 
 class CategoryService {
 
@@ -63,7 +64,9 @@ class CategoryService {
         const existsCategory = await this.findById(categoryId)
 
         if (!existsCategory) throw new Error("Categoria não encontrada")
+        const product = await productService.findByCategory(existsCategory.id)
 
+        if(product) throw new Error("Categoria pertence a um produto")
         return await prisma.category.delete({
             where: {
                 id: categoryId
