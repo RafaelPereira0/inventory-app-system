@@ -2,7 +2,7 @@ import prisma from "../../lib/prisma"
 import { CreateStockMovement } from "../types/stockMovement.type"
 
 class StockMovementService {
-    async createMovement(data: CreateStockMovement) {
+    async createMovement(data: CreateStockMovement, userId: number) {
 
         if(data.quantity <= 0) throw new Error("Quantidade inválida")
 
@@ -58,7 +58,8 @@ class StockMovementService {
                     select: {
                         name: true
                     }
-                }
+                },
+                createdAt: true,
             },
             orderBy: {
                 createdAt: "desc"

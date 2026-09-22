@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getProducts } from '../../hooks/getProducts';
 import './styles.css'
+import { NavLink } from 'react-router-dom';
 
 export default function Dashboard() {
 
@@ -120,7 +121,9 @@ export default function Dashboard() {
                 <div className="panel">
                     <div className="panel-header">
                         <h2>Estoque</h2>
-                        <button>Ver produtos</button>
+                        <button>
+                            <NavLink to='/products'>Ver produtos</NavLink>
+                        </button>
                     </div>
 
 

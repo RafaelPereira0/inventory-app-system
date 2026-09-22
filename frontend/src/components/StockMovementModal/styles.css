@@ -1,0 +1,217 @@
+.stock-modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, .5);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 1000;
+}
+
+.stock-modal {
+    width: 100%;
+    max-width: 500px;
+
+    background: white;
+
+    border-radius: 12px;
+
+    padding: 24px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, .2);
+}
+
+.stock-modal-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+}
+
+.stock-modal-header h2 {
+    margin: 0;
+}
+
+.stock-modal-close-button {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #f3f4f6;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+.stock-modal-content {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    color: #4b5563;
+}
+
+.stock-modal-actions {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.stock-modal-actions button {
+    flex: 1;
+
+    padding: 10px;
+
+    border: none;
+    border-radius: 7px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.stock-modal-edit-button {
+    background: #2563eb;
+
+    color: white;
+}
+
+.stock-modal-delete-button {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+.stock-modal-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.stock-modal-form label {
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.stock-modal-form input {
+    padding: 10px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    margin-bottom: 10px;
+}
+
+.stock-modal-form select {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    background-color: #fff;
+
+    color: #111827;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+
+    appearance: auto;
+}
+
+.stock-modal-form select:focus {
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.stock-modal-form select:disabled {
+    background-color: #f3f4f6;
+
+    color: #9ca3af;
+
+    cursor: not-allowed;
+}
+
+.stock-modal-form input:focus {
+    border-color: #2563eb;
+
+    outline: none;
+
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.stock-modal-form-actions {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.stock-modal-form-actions button {
+    flex: 1;
+
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+.stock-modal-form-actions button:first-child {
+    background: #f3f4f6;
+}
+
+.stock-modal-form-actions button:last-child {
+    background: #2563eb;
+
+    color: white;
+}
+
+.stock-modal-form-actions button:disabled {
+    opacity: .6;
+
+    cursor: not-allowed;
+}
+
+.stock-modal-error {
+    margin-top: 6px;
+
+    color: #dc2626;
+
+    font-size: 13px;
+}
