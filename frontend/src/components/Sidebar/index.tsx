@@ -38,7 +38,7 @@ export default function SideBar() {
                 </NavLink>
 
                 {user?.role === "ADMIN" && (
-                    <NavLink to="/agenda" className="link">
+                    <NavLink to="/users" className="link">
                         Usuários
                     </NavLink>
                 )}

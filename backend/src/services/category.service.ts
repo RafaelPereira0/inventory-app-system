@@ -1,4 +1,5 @@
 import prisma from '../../lib/prisma'
+import redis from '../config/redis'
 import { category } from '../types/category.type'
 import productService from './product.service'
 
@@ -17,6 +18,8 @@ class CategoryService {
         })
 
         if (alreadyExist) throw new Error("Categoria já cadastrada")
+
+        await redis.del("categories")
 
         return await prisma.category.create({
             data: {
@@ -50,7 +53,14 @@ class CategoryService {
     }
 
     async findAll() {
-        return await prisma.category.findMany({
+
+        const cachedCategories = await redis.get("categories")
+
+        if(cachedCategories){
+            return JSON.parse(cachedCategories)
+        }
+
+        const categories =  await prisma.category.findMany({
             select: {
                 id: true,
                 name: true
@@ -59,6 +69,10 @@ class CategoryService {
                 name: "asc"
             }
         })
+
+        await redis.set("categories", JSON.stringify(categories), { EX: 60 })
+
+        return categories
     }
     async delete(categoryId: number) {
         const existsCategory = await this.findById(categoryId)
@@ -67,6 +81,9 @@ class CategoryService {
         const product = await productService.findByCategory(existsCategory.id)
 
         if(product) throw new Error("Categoria pertence a um produto")
+
+        await redis.del("categories")
+
         return await prisma.category.delete({
             where: {
                 id: categoryId
@@ -80,6 +97,7 @@ class CategoryService {
         if (!existsCategory) throw new Error("Categoria não encontrada")
         if(!data.name || data.name.length === 0)throw new Error("Nenhum dado para atualizar")  
 
+        await redis.del("categories")
 
         return await prisma.category.update({
             where: {

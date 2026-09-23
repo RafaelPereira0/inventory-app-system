@@ -1,0 +1,256 @@
+.user-modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, .5);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 1000;
+}
+
+.user-modal {
+    width: 100%;
+    max-width: 500px;
+
+    background: white;
+
+    border-radius: 12px;
+
+    padding: 24px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, .2);
+}
+
+.user-modal-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+}
+
+.user-modal-header h2 {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.user-modal-close-button {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #f3f4f6;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.user-modal-close-button:hover {
+    background: #e5e7eb;
+}
+
+
+/* VISUALIZAÇÃO */
+
+.user-modal-content {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    color: #4b5563;
+}
+
+.user-modal-content p {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+.user-modal-content strong {
+    color: #111827;
+}
+
+
+/* AÇÕES */
+
+.user-modal-actions {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.user-modal-actions button {
+    flex: 1;
+
+    padding: 10px;
+
+    border: none;
+    border-radius: 7px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.user-edit-button {
+    background: #2563eb;
+
+    color: white;
+}
+
+.user-edit-button:hover {
+    background: #1d4ed8;
+}
+
+.user-delete-button {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+.user-delete-button:hover {
+    background: #fecaca;
+}
+
+
+/* FORM */
+
+.user-modal-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.user-modal-form label {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.user-modal-form input,
+.user-modal-form select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    background: white;
+
+    color: #111827;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.user-modal-form input {
+    margin-bottom: 10px;
+}
+
+.user-modal-form input:focus,
+.user-modal-form select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px rgba(37, 99, 235, .12);
+}
+
+.user-modal-form select {
+    cursor: pointer;
+
+    margin-bottom: 10px;
+}
+
+
+/* ERROS */
+
+.user-modal-error {
+    margin: -4px 0 4px;
+
+    color: #dc2626;
+
+    font-size: 13px;
+}
+
+
+/* BOTÕES DO FORM */
+
+.user-modal-form-actions {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.user-modal-form-actions button {
+    flex: 1;
+
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: .2s;
+}
+
+.user-modal-form-actions button:first-child {
+    background: #f3f4f6;
+
+    color: #374151;
+}
+
+.user-modal-form-actions button:first-child:hover {
+    background: #e5e7eb;
+}
+
+.user-modal-form-actions button:last-child {
+    background: #2563eb;
+
+    color: white;
+}
+
+.user-modal-form-actions button:last-child:hover {
+    background: #1d4ed8;
+}
+
+.user-modal-form-actions button:disabled {
+    opacity: .6;
+
+    cursor: not-allowed;
+}

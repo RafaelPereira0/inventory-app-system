@@ -9,6 +9,6 @@ export async function createStockMovementApi(data: CreateStockMovementType) {
 
 export async function getAllStockMovementApi() {
     const response = await api.get("/movement/all")
-
+console.log("resposta recebida:", response.data)
     return response.data.result
 }

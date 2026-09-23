@@ -44,11 +44,6 @@ export default function Products() {
     }
 
 
-    if (isError) {
-        return <div>Erro ao carregar produtos.</div>
-    }
-
-
     return (
 
         <div className="products-page">
@@ -65,16 +60,26 @@ export default function Products() {
 
 
             <div className="products-grid">
+                {isError ? (
+                    <p className="products-error">
+                        Erro ao buscar produtos
+                    </p>
+                ) : products?.length === 0 ? (
+                    <p className="products-empty">
+                        Nenhum produto cadastrado
+                    </p>
+                ) :
+                    products?.map((product) => (
 
-                {products?.map((product) => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            onView={handleView}
+                        />
 
-                    <ProductCard
-                        key={product.id}
-                        product={product}
-                        onView={handleView}
-                    />
+                    ))
+                }
 
-                ))}
 
             </div>
 

@@ -1,24 +1,24 @@
-.products-page {
+.users-page {
     width: 100%;
 }
 
-.products-header {
+.users-header {
     margin-bottom: 24px;
+
     display: flex;
     justify-content: space-between;
 }
 
-.products-header h1 {
+.users-header h1 {
     font-size: 28px;
-
     font-weight: 600;
 }
 
-.products-header button {
+.users-header button {
     margin-right: 15px;
 }
 
-.new-product-button {
+.new-user-button {
     padding: 10px 18px;
 
     background-color: #2563eb;
@@ -32,82 +32,116 @@
 
     cursor: pointer;
 
-    transition: background-color 0.2s, transform 0.1s;
+    transition:
+        background-color 0.2s,
+        transform 0.1s;
 }
 
-.new-product-button:hover {
+.new-user-button:hover {
     background-color: #851ae9;
 }
 
-.new-product-button:active {
+.new-user-button:active {
     transform: scale(0.97);
 }
 
-.categories-grid {
+
+.users-grid {
     display: grid;
 
     grid-template-columns:
-        repeat(auto-fit, minmax(300px, 1fr));
+        repeat(auto-fill, minmax(300px, 320px));
 
     gap: 20px;
 
     align-items: start;
 }
 
-.categories-empty {
+
+/* VAZIO */
+
+.users-empty {
     grid-column: 1 / -1;
+
     width: 100%;
     min-height: 220px;
+
     box-sizing: border-box;
+
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
     padding: 40px 20px;
+
     background: #fff;
+
     border: 1px dashed #d1d5db;
     border-radius: 12px;
+
     color: #6b7280;
+
     font-size: 15px;
     font-weight: 500;
+
     text-align: center;
 }
 
-.categories-empty::before {
-    content: "📁";
+.users-empty::before {
+    content: "👤";
+
     margin-bottom: 12px;
+
     font-size: 32px;
 }
 
 
-.categories-error {
+/* ERRO */
+
+.users-error {
     grid-column: 1 / -1;
+
     width: 100%;
     min-height: 220px;
+
     box-sizing: border-box;
+
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
     padding: 40px 20px;
+
     background: #fff;
+
     border: 1px dashed #fecaca;
     border-radius: 12px;
+
     color: #dc2626;
+
     font-size: 15px;
     font-weight: 500;
+
     text-align: center;
 }
 
-.categories-error::before {
+.users-error::before {
     content: "⚠";
+
     width: 38px;
     height: 38px;
+
     margin-bottom: 12px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     border-radius: 50%;
+
     background: #fee2e2;
+
     font-size: 20px;
 }

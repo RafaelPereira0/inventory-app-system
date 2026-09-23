@@ -1,4 +1,5 @@
 import prisma from "../../lib/prisma"
+import redis from "../config/redis"
 import { CreateStockMovement } from "../types/stockMovement.type"
 
 class StockMovementService {
@@ -39,16 +40,26 @@ class StockMovementService {
             }
         })
 
+        await redis.del("stockMovements")
+
         return await prisma.stockMovement.create({
             data: {
                 productId: data.productId,
                 quantity: data.quantity,
-                type: data.type
+                type: data.type,
+                userId: userId
             }
         })
     }
 
     async findAll() {
+
+        const cachedMovements = await redis.get("stockMovements")
+
+        if(cachedMovements){
+            return JSON.parse(cachedMovements)
+        }
+
         const movements = await prisma.stockMovement.findMany({
             select: {
                 id: true,
@@ -66,9 +77,8 @@ class StockMovementService {
             }
         })
 
-        if (movements.length === 0) {
-            throw new Error("Nenhuma movimentação encontrada")
-        }
+        await redis.set("stockMovements", JSON.stringify(movements), {EX: 60})
+
         return movements
     }
 }

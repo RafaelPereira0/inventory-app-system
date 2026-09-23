@@ -64,17 +64,25 @@ export default function Categories() {
             </div>
 
 
-            <div className="products-grid">
+            <div className="categories-grid">
 
-                {categories?.map((category) => (
+                {isError ? (
+                    <p className="categories-error"> Erro ao buscar categorias </p>
+                ) : categories?.length === 0 ? (
+                    <p className="categories-empty">
+                        Nenhuma categoria cadastrada
+                    </p>
+                ) :
+                    categories?.map((category) => (
 
-                    <CategoryCard
-                        key={category.id}
-                        category={category}
-                        onView={handleView}
-                    />
+                        <CategoryCard
+                            key={category.id}
+                            category={category}
+                            onView={handleView}
+                        />
 
-                ))}
+                    ))
+                }
 
             </div>
 

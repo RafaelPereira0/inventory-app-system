@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { getStockMovement } from "../../hooks/getStockMovement"
 import StockMovementModal from "../../components/StockMovementModal"
-import './styles.css'
+import "./styles.css"
 
 export default function Stock() {
 
@@ -11,27 +11,42 @@ export default function Stock() {
         isError
     } = getStockMovement()
 
-    const [movementType, setMovementType] = useState<"IN" | "OUT" | null>(null)
+    const [
+        movementType,
+        setMovementType
+    ] = useState<"IN" | "OUT" | null>(null)
 
-    if (isLoading) return <div>Carregando movimentações</div>
 
-    if (isError) return <div>Erro ao carregar movimentações</div>
+    if (isLoading) {
+        return <div>Carregando movimentações...</div>
+    }
+
 
     return (
         <div className="stock-page">
 
             <div className="stock-header">
+
                 <h1>Estoque</h1>
 
                 <div className="stock-actions">
-                    <button className="stock-entry-button" onClick={() => setMovementType("IN")}>
+
+                    <button
+                        className="stock-entry-button"
+                        onClick={() => setMovementType("IN")}
+                    >
                         + Entrada
                     </button>
 
-                    <button className="stock-exit-button" onClick={() => setMovementType("OUT")}>
+                    <button
+                        className="stock-exit-button"
+                        onClick={() => setMovementType("OUT")}
+                    >
                         - Saída
                     </button>
+
                 </div>
+
             </div>
 
 
@@ -39,48 +54,72 @@ export default function Stock() {
 
                 <h2>Movimentações</h2>
 
-                {movements?.map((movement) => (
-                    <div
-                        className="stock-item"
-                        key={movement.id}
-                    >
-                        <div>
-                            <strong>
-                                {movement.product.name}
-                            </strong>
+                {isError ? (
 
-                            <span>
-                                {new Date(
-                                    movement.createdAt
-                                ).toLocaleString("pt-BR")}
+                    <p className="stock-empty">
+                        Erro ao carregar movimentações.
+                    </p>
+
+                ) : movements?.length === 0 ? (
+
+                    <p className="stock-empty">
+                        Nenhuma movimentação registrada.
+                    </p>
+
+                ) : (
+
+                    movements?.map((movement) => (
+
+                        <div
+                            className="stock-item"
+                            key={movement.id}
+                        >
+
+                            <div>
+
+                                <strong>
+                                    {movement.product.name}
+                                </strong>
+
+                                <span>
+                                    {new Date(
+                                        movement.createdAt
+                                    ).toLocaleString("pt-BR")}
+                                </span>
+
+                            </div>
+
+                            <span
+                                className={
+                                    movement.type === "IN"
+                                        ? "stock-in"
+                                        : "stock-out"
+                                }
+                            >
+                                {movement.type === "IN"
+                                    ? `+${movement.quantity}`
+                                    : `-${movement.quantity}`
+                                }
                             </span>
+
                         </div>
 
-                        <span
-                            className={
-                                movement.type === "IN"
-                                    ? "stock-in"
-                                    : "stock-out"
-                            }
-                        >
-                            {movement.type === "IN"
-                                ? `+${movement.quantity}`
-                                : `-${movement.quantity}`
-                            }
-                        </span>
-                    </div>
-                ))}
+                    ))
 
-                {movementType && (
-                    <StockMovementModal
-                        type={movementType}
-                        close={() => setMovementType(null)}
-                    />
                 )}
 
             </div>
 
-        </div>
 
+            {movementType && (
+
+                <StockMovementModal
+                    type={movementType}
+                    close={() => setMovementType(null)}
+                />
+
+            )}
+
+        </div>
     )
 }
