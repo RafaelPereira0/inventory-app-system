@@ -33,7 +33,7 @@ export default function SideBar() {
                     Estoque
                 </NavLink>
 
-                <NavLink to="/appointments" className="link">
+                <NavLink to="/orders" className="link">
                     Pedidos
                 </NavLink>
 

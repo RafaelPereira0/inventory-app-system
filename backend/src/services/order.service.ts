@@ -58,7 +58,7 @@ class OrderService {
                     productId: item.product.id,
                     quantity: item.quantity,
                     type: "OUT"
-                })
+                }, userId)
             }
 
 
@@ -74,6 +74,11 @@ class OrderService {
                 id: true,
                 userId: true,
                 status: true,
+                user: {
+                    select: {
+                        name: true
+                    }
+                },
                 items: {
                     select: {
                         quantity: true,
@@ -103,7 +108,7 @@ class OrderService {
         return existsOrder
     }
 
-    async cancelOrder(orderId: number) {
+    async cancelOrder(orderId: number, userId: number) {
         const existsOrder = await this.findById(orderId)
 
         if (!existsOrder) throw new Error("Pedido não encontrado")
@@ -132,7 +137,8 @@ class OrderService {
                     data: {
                         productId: item.productId,
                         quantity: item.quantity,
-                        type: "IN"
+                        type: "IN",
+                        userId: userId
                     }
                 })
             }

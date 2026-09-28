@@ -275,6 +275,10 @@ export default function UserModal({
                             <option value="ADMIN">
                                 Admin
                             </option>
+
+                            <option value="CUSTOMER">
+                                Customer
+                            </option>
                         </select>
 
                         {errors.role && (

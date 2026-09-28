@@ -121,8 +121,12 @@ orderRoutes.get(
  *         description: Token não informado ou inválido
  */
 orderRoutes.put(
-    "/:id",
+    "/cancel/:id",
     orderController.cancelOrder
+);
+orderRoutes.put(
+    "/:id",
+    orderController.updateOrder
 );
 
 export default orderRoutes;

@@ -117,9 +117,19 @@ td {
     color: #15803d;
 }
 
+.paid {
+    background: #dcfce7;
+    color: #20e86a;
+}
+
 .pending {
     background: #fef3c7;
     color: #b45309;
+}
+
+.canceled {
+    background: #fef3c7;
+    color: #e81c1c;
 }
 
 .progress {

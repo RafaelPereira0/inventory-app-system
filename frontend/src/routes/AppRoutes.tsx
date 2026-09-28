@@ -7,6 +7,7 @@ import Products from "../pages/Products";
 import Categories from "../pages/Categories";
 import Stock from "../pages/Stocks";
 import Users from "../pages/Users";
+import Orders from "../pages/Orders";
 
 export default function AppRoutes(){
     return (
@@ -20,6 +21,7 @@ export default function AppRoutes(){
                         <Route path="/categories" element={<Categories/>}/>
                         <Route path="/stock" element={<Stock/>}/>
                         <Route path="/users" element={<Users/>}/>
+                        <Route path="/orders" element={<Orders/>}/>
                     </Route>
                 </Route>
 

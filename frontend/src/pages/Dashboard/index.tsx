@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { getProducts } from '../../hooks/getProducts';
 import './styles.css'
 import { NavLink } from 'react-router-dom';
+import { getOrders } from '../../hooks/useOrders';
 
 export default function Dashboard() {
 
@@ -11,6 +12,10 @@ export default function Dashboard() {
         isError
     } = getProducts()
 
+    const {
+        data: orders
+    } = getOrders()
+    console.log(orders)
     const [lowStocks, setLowStock] = useState(0)
 
     return (
@@ -32,7 +37,7 @@ export default function Dashboard() {
 
                 <div className="card">
                     <span className="card-title">Pedidos</span>
-                    <strong>47</strong>
+                    <strong>{orders?.length}</strong>
                     <p>Pedidos realizados</p>
                 </div>
 
@@ -57,7 +62,11 @@ export default function Dashboard() {
                 <div className="panel">
                     <div className="panel-header">
                         <h2>Pedidos recentes</h2>
-                        <button>Ver todos</button>
+                        <button>
+                            <NavLink to="/orders">
+                                Ver Todos
+                            </NavLink>
+                        </button>
                     </div>
 
                     <table>
@@ -71,49 +80,31 @@ export default function Dashboard() {
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>#1024</td>
-                                <td>João Silva</td>
-                                <td>R$ 259,90</td>
-                                <td>
-                                    <span className="status success">
-                                        Entregue
-                                    </span>
-                                </td>
-                            </tr>
+                            {orders?.map((order) => {
+                                const total = order.items.reduce(
+                                    (acc, item) =>
+                                        acc + Number(item.price) * item.quantity,
+                                    0
+                                )
 
-                            <tr>
-                                <td>#1023</td>
-                                <td>Maria Souza</td>
-                                <td>R$ 189,90</td>
-                                <td>
-                                    <span className="status pending">
-                                        Pendente
-                                    </span>
-                                </td>
-                            </tr>
+                                return (
+                                    <tr key={order.id}>
+                                        <td>{order.id}</td>
 
-                            <tr>
-                                <td>#1022</td>
-                                <td>Carlos Lima</td>
-                                <td>R$ 349,90</td>
-                                <td>
-                                    <span className="status progress">
-                                        Em andamento
-                                    </span>
-                                </td>
-                            </tr>
+                                        <td>{order.user.name}</td>
 
-                            <tr>
-                                <td>#1021</td>
-                                <td>Ana Oliveira</td>
-                                <td>R$ 79,90</td>
-                                <td>
-                                    <span className="status success">
-                                        Entregue
-                                    </span>
-                                </td>
-                            </tr>
+                                        <td>
+                                            R$ {total.toFixed(2)}
+                                        </td>
+
+                                        <td>
+                                            <span className={`status ${order.status.toLocaleLowerCase()}`}>
+                                                {order.status}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 </div>

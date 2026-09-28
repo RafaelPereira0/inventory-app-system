@@ -17,7 +17,7 @@ export default function Products() {
         isLoading,
         isError
     } = getProducts()
-
+    console.log(products)
 
     const [selectedProduct, setSelectedProduct] =
         useState<ProductType | null>(null)

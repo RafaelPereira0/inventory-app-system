@@ -20,7 +20,7 @@ class OrderController {
         try {
             const orders = await orderService.findAll()
 
-            return res.status(200).json({ resul: orders })
+            return res.status(200).json({ result: orders })
         } catch (err: any) {
             return res.status(400).json({ error: err.message })
         }
@@ -42,8 +42,8 @@ class OrderController {
         try {
 
             const orderId = Number(req.params.id)
-
-            const result = await orderService.cancelOrder(orderId)
+            const userId = req.user!.id
+            const result = await orderService.cancelOrder(orderId, userId)
 
             return res.status(200).json({message: "Pedido cancelado com sucesso", result: result})
         } catch (err: any) {
