@@ -11,6 +11,17 @@ export default function Stock() {
         isError
     } = getStockMovement()
 
+    const roleLabels = {
+        ADMIN: "Administrador",
+        MANAGER: "Gerente",
+        CUSTOMER: "Cliente"
+    };
+    const reasonLabels = {
+        PURCHASE: "Compra de fornecedor",
+        LOSS: "Perda de produto",
+        SALE: "Venda"
+    };
+
     const [
         movementType,
         setMovementType
@@ -86,7 +97,16 @@ export default function Stock() {
                                         movement.createdAt
                                     ).toLocaleString("pt-BR")}
                                 </span>
-
+                                {movement.reason && (
+                                    <span>
+                                        Tipo: {reasonLabels[movement.reason]}
+                                    </span>
+                                )}
+                                {movement.user && (
+                                    <span>
+                                        Usuário: {movement.user.name} --- {roleLabels[movement.user.role]}
+                                    </span>
+                                )}
                             </div>
 
                             <span

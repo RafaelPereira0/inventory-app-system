@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import type {  CreateStockMovementType, StockFormType, StockMovementModal } from "../../types/stockMovement";
+import type { CreateStockMovementType, StockFormType, StockMovementModal } from "../../types/stockMovement";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { stockSchema } from "../../schemas/stockMovement.schema";
 import { createStockMovement } from "../../hooks/getStockMovement";
@@ -7,43 +7,45 @@ import { useToast } from "../../hooks/useToast"
 import { getProducts } from "../../hooks/getProducts";
 import './styles.css'
 
-export default function StockMovementModal ({type, close}: StockMovementModal){
-    
+export default function StockMovementModal({ type, close }: StockMovementModal) {
+
     const createStock = createStockMovement()
-    const {data: products, isLoading} = getProducts()
-    const {showToast} = useToast()
+    const { data: products, isLoading } = getProducts()
+    const { showToast } = useToast()
 
     const {
         register,
         handleSubmit,
         watch,
-        formState: {errors}
+        formState: { errors }
     } = useForm<StockFormType>({
-            defaultValues: {
-                quantity: 0,
-                productId: 0
-            },
-            resolver: zodResolver(stockSchema)
+        defaultValues: {
+            quantity: 0,
+            productId: 0,
+            reason: "PURCHASE"
+        },
+        resolver: zodResolver(stockSchema)
     })
 
     const selectedProductId = watch('productId')
 
-    const selectedProduct = products?.find((product) => 
+    const selectedProduct = products?.find((product) =>
         product.id === selectedProductId
     )
 
-    function onSubmit(data: StockFormType){
+    function onSubmit(data: StockFormType) {
 
-        if(type === "OUT" && selectedProduct && data.quantity > selectedProduct.quantity){
-               showToast("Quantidade maior do que estoque disponível", "warning")
+        if (type === "OUT" && selectedProduct && data.quantity > selectedProduct.quantity) {
+            showToast("Quantidade maior do que estoque disponível", "warning")
 
-               return
+            return
         }
 
         createStock.mutate({
             productId: data.productId,
             quantity: data.quantity,
-            type
+            type,
+            reason: data.reason
         }, {
             onSuccess: () => {
                 close()
@@ -81,10 +83,10 @@ export default function StockMovementModal ({type, close}: StockMovementModal){
                     </label>
 
                     <select
-                    {...register("productId", {
+                        {...register("productId", {
                             valueAsNumber: true
                         })}
-                        disabled={isLoading}    
+                        disabled={isLoading}
                     >
                         {products?.map((product) => (
                             <option value={product.id} key={product.id}>
@@ -115,11 +117,30 @@ export default function StockMovementModal ({type, close}: StockMovementModal){
                         ...register("quantity", {
                             valueAsNumber: true
                         })
-                    } disabled={isLoading}/>
+                    } disabled={isLoading} />
 
                     {errors.quantity && (
                         <p>
                             {errors.quantity.message}
+                        </p>
+                    )}
+                    {type === "IN" ? (
+                        <div>
+                            <select {...register("reason")} className="stock-select" disabled={isLoading}>
+                                <option value="PURCHASE">Compra de fornecedor</option>
+                            </select>
+                        </div>
+                    ) : (
+                        <div>
+                            <select {...register("reason")} className="stock-select" disabled={isLoading}>
+                                <option value="LOSS">Perda de produto</option>
+                                <option value="SALE">Venda</option>
+                            </select>
+                        </div>
+                    )}
+                    {errors.reason && (
+                        <p>
+                            {errors.reason.message}
                         </p>
                     )}
 

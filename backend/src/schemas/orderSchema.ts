@@ -6,6 +6,7 @@ export const orderCreateSchema = z.object({
 
 export const orderUpdateSchema = z.object({
     status: z.enum([
+        "PENDING",
         "PAID",
         "DELIVERED",
         "CANCELLED"

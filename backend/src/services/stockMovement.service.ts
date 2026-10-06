@@ -47,6 +47,7 @@ class StockMovementService {
                 productId: data.productId,
                 quantity: data.quantity,
                 type: data.type,
+                reason: data.reason,
                 userId: userId
             }
         })
@@ -70,7 +71,19 @@ class StockMovementService {
                         name: true
                     }
                 },
+                order: {
+                    select: {
+                        id: true
+                    }
+                },
+                reason: true,
                 createdAt: true,
+                user: {
+                    select: {
+                        name: true,
+                        role: true
+                    }
+                }
             },
             orderBy: {
                 createdAt: "desc"

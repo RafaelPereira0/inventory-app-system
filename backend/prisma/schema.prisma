@@ -18,6 +18,14 @@ enum StockMovementType {
   OUT
 }
 
+enum StockMovementReason {
+  PURCHASE
+  SALE
+  ADJUSTMENT
+  RETURN
+  LOSS
+}
+
 enum OrderType {
   PENDING
   PAID
@@ -69,11 +77,14 @@ model StockMovement {
   id        Int               @id @default(autoincrement())
   productId Int
   userId    Int
+  orderId   Int?
   type      StockMovementType
+  reason    StockMovementReason?
   quantity  Int
   createdAt DateTime          @default(now())
 
   product Product @relation(fields: [productId], references: [id])
+  order   Order?  @relation(fields: [orderId], references: [id])
   user    User    @relation(fields: [userId], references: [id], onDelete: Restrict)
 }
 
@@ -88,6 +99,7 @@ model Order {
   user User @relation(fields: [userId], references: [id])
 
   items OrderItem[]
+  stockMovements  StockMovement[]
 }
 
 model OrderItem {

@@ -7,6 +7,8 @@ import type {
     OrderType,
     UpdateOrderType
 } from "../../types/order"
+import { updateOrder, cancelOrder } from "../../hooks/useOrders"
+import { useToast } from "../../hooks/useToast"
 
 interface OrderModalProps {
     order: OrderType
@@ -20,6 +22,11 @@ export default function OrderModal({
 
     const [editing, setEditing] = useState(false)
 
+    const { showToast } = useToast()
+    const updatingOrder = updateOrder()
+    const cancelingOrder = cancelOrder()
+    const canCancelOrder = order.status !== "DELIVERED" ? true : false
+    
     const {
         register,
         handleSubmit
@@ -34,8 +41,52 @@ export default function OrderModal({
         0
     )
 
+    function submitCancelOrder() {
+
+        cancelingOrder.mutate(
+            {
+                id: order.id
+            },
+            {
+                onSuccess: () => {
+                    close()
+                    showToast("Pedido cancelado com sucesso", "success")
+                },
+
+                onError: () => {
+                    showToast(
+                        "Erro ao atualizar pedido",
+                        "error"
+                    )
+                }
+            }
+        )
+    }
+
     function onSubmit(data: UpdateOrderType) {
-        console.log(data)
+        updatingOrder.mutate(
+            {
+                id: order.id,
+                data
+            },
+            {
+                onSuccess: () => {
+                    close()
+
+                    showToast(
+                        "Pedido atualizado com sucesso",
+                        "success"
+                    )
+                },
+
+                onError: () => {
+                    showToast(
+                        "Erro ao atualizar pedido",
+                        "error"
+                    )
+                }
+            }
+        )
     }
 
     return (
@@ -119,6 +170,13 @@ export default function OrderModal({
                                 onClick={() => setEditing(true)}
                             >
                                 Alterar status
+                            </button>
+                            <button
+                                className="cancel-button"
+                                onClick={submitCancelOrder}
+                                disabled={!canCancelOrder}
+                            >
+                                Cancelar Pedido
                             </button>
 
                         </div>

@@ -8,7 +8,7 @@ export async function getOrdersApi() {
 }
 
 export async function updateOrderApi(id: number, data: UpdateOrderType) {
-    const response = await api.post(`order/${id}`, data)
+    const response = await api.put(`order/${id}`, data)
     
     return response.data.result
 }

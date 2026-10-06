@@ -57,7 +57,9 @@ class OrderService {
                 await stockMovementService.createMovement({
                     productId: item.product.id,
                     quantity: item.quantity,
-                    type: "OUT"
+                    type: "OUT",
+                    reason: "SALE",
+                    orderId: order.id
                 }, userId)
             }
 
@@ -112,7 +114,7 @@ class OrderService {
         const existsOrder = await this.findById(orderId)
 
         if (!existsOrder) throw new Error("Pedido não encontrado")
-        if (existsOrder && (existsOrder.status === "DELIVERED" || existsOrder.status === "CANCELLED")) throw new Error("Não é possível cancelar o pedido")
+        if (existsOrder && (existsOrder.status === "DELIVERED")) throw new Error("Não é possível cancelar o pedido")
 
         return await prisma.$transaction(async (tx) => {
             const orderItems = await tx.orderItem.findMany({
@@ -138,6 +140,8 @@ class OrderService {
                         productId: item.productId,
                         quantity: item.quantity,
                         type: "IN",
+                        orderId: orderId,
+                        reason: "RETURN",
                         userId: userId
                     }
                 })
