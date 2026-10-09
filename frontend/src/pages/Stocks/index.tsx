@@ -10,7 +10,7 @@ export default function Stock() {
         isLoading,
         isError
     } = getStockMovement()
-
+    
     const roleLabels = {
         ADMIN: "Administrador",
         MANAGER: "Gerente",

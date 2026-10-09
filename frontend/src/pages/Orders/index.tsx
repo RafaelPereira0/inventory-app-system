@@ -5,6 +5,9 @@ import { getOrders } from "../../hooks/useOrders"
 import type { OrderType } from "../../types/order"
 import OrderCard from "../../components/OrderCard"
 import OrderModal from "../../components/OrderModal"
+import { getProducts } from "../../hooks/getProducts"
+import { getAllUsers, getCustomers } from "../../hooks/useUsers"
+import CreateOrderModal from "../../components/CreateOrderModal"
 
 export default function Orders() {
 
@@ -14,8 +17,19 @@ export default function Orders() {
         isError
     } = getOrders()
 
+    const {
+        data: products
+    } = getProducts()
+
+    const {
+        data: users
+    } = getCustomers()
+
     const [selectedOrder, setSelectedOrder] =
         useState<OrderType | null>(null)
+
+    const [creatingOrder, setCreatingOrder] =
+        useState(false)
 
     function handleView(order: OrderType) {
         setSelectedOrder(order)
@@ -38,7 +52,9 @@ export default function Orders() {
                 <h1>
                     Pedidos
                 </h1>
-
+                <button className="order-entry-button" onClick={() => setCreatingOrder(true)}>
+                    Novo Pedido
+                </button>
             </div>
 
             <div className="orders-grid">
@@ -78,6 +94,14 @@ export default function Orders() {
                     close={handleCloseModal}
                 />
 
+            )}
+
+            {creatingOrder && users && products &&(
+                <CreateOrderModal
+                    users={users}
+                    products={products}
+                    close={() => setCreatingOrder(false)}
+                />
             )}
 
         </div>

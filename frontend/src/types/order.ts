@@ -1,3 +1,6 @@
+import type { ProductType } from "./products"
+import type { CustomerType, UserType } from "./user"
+
 export interface OrderType {
     id: number
     userId: number
@@ -26,4 +29,18 @@ export interface UpdateOrderType {
 export interface OrderCardProps {
     order: OrderType
     onView: (order: OrderType) => void
+}
+
+export interface CreateOrderType{
+    userId: number,
+    items: {
+        productId: number,
+        quantity: number
+    }[]
+}
+
+export interface CreateOrderModalProps {
+    close: () => void
+    products: ProductType[]
+    users: CustomerType[]
 }

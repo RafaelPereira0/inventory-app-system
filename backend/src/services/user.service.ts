@@ -52,6 +52,20 @@ class UserService {
         })
     }
 
+    async getCustomers() {
+        return await prisma.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                email: true
+            }, where: {
+                role: "CUSTOMER"
+            }, orderBy: {
+                id: "asc"
+            }
+        })
+    }
+
     async findById(id: number) {
         const user = await prisma.user.findUnique({
             where: {

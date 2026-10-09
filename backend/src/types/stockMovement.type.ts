@@ -4,5 +4,6 @@ export interface CreateStockMovement {
     productId: number
     reason: StockMovementReason
     quantity: number
-    type: StockMovementType
+    type: StockMovementType,
+    orderId: number
 }

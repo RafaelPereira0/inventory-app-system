@@ -11,6 +11,12 @@ export interface UserType {
     role: UserRole
 }
 
+export interface CustomerType{
+    id: number,
+    name: string,
+    email: string
+}
+
 export interface CreateUserType{
     name: string,
     email: string,

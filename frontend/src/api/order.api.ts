@@ -1,4 +1,4 @@
-import type { UpdateOrderType } from "../types/order";
+import type { CreateOrderType, UpdateOrderType } from "../types/order";
 import { api } from "./axios";
 
 export async function getOrdersApi() {
@@ -15,6 +15,12 @@ export async function updateOrderApi(id: number, data: UpdateOrderType) {
 
 export async function cancelOrderApi(id: number) {
     const response = await api.post(`/order/cancel/${id}`)
+
+    return response.data.result
+}
+
+export async function createOrderApi(data: CreateOrderType) {
+    const response = await api.post("/order/create", data)
 
     return response.data.result
 }

@@ -93,6 +93,12 @@ userRoutes.get(
     userController.findUsers
 );
 
+userRoutes.get(
+    "/customers",
+    authMiddleware,
+    userController.findCustomers
+)
+
 /**
  * @swagger
  * /user/{id}:

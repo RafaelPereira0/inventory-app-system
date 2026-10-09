@@ -36,6 +36,17 @@ class UserController {
             return res.status(400).json({error: err.message})
         }
     }
+
+    async findCustomers(req: Request, res: Response){
+        try{
+            const data = await userService.getCustomers()
+
+            return res.status(200).json({result: data})
+        }catch(err: any){
+            return res.status(400).json({error: err.message})
+        }
+    }
+
     async findUserById(req: Request, res: Response){
         try{
             const id = Number(req.params.id)

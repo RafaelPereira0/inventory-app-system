@@ -3,6 +3,7 @@ import { getProducts } from '../../hooks/getProducts';
 import './styles.css'
 import { NavLink } from 'react-router-dom';
 import { getOrders } from '../../hooks/useOrders';
+import { getCustomers } from '../../hooks/useUsers';
 
 export default function Dashboard() {
 
@@ -15,8 +16,10 @@ export default function Dashboard() {
     const {
         data: orders
     } = getOrders()
-    console.log(orders)
-    const [lowStocks, setLowStock] = useState(0)
+
+    const {
+        data: users
+    } = getCustomers()
 
     return (
         <div className="dashboard">
@@ -51,9 +54,9 @@ export default function Dashboard() {
                 </div>
 
                 <div className="card">
-                    <span className="card-title">Usuários</span>
-                    <strong>23</strong>
-                    <p>Usuários cadastrados</p>
+                    <span className="card-title">Clientes</span>
+                    <strong>{users?.length}</strong>
+                    <p>Clientes cadastrados</p>
                 </div>
 
             </div>

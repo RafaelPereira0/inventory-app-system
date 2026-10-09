@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { OrderType, UpdateOrderType } from "../types/order";
-import { cancelOrderApi, getOrdersApi, updateOrderApi } from "../api/order.api";
+import type { CreateOrderType, OrderType, UpdateOrderType } from "../types/order";
+import { cancelOrderApi, createOrderApi, getOrdersApi, updateOrderApi } from "../api/order.api";
 
 export function getOrders() {
 
-    const a = useQuery<OrderType[]>({
+    const data = useQuery<OrderType[]>({
         queryKey: ['orders'],
         queryFn: getOrdersApi
     })
 
-    return a
+    return data
 }
 
 export function updateOrder() {
@@ -27,6 +27,25 @@ export function updateOrder() {
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ["orders"]
+            })
+        }
+    })
+}
+
+export function createOrder(){
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: (data: CreateOrderType) =>
+            createOrderApi(data),
+
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['orders']
+            })
+
+            queryClient.invalidateQueries({
+                queryKey: ["products"]
             })
         }
     })

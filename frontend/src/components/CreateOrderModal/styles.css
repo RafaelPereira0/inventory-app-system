@@ -1,0 +1,385 @@
+.create-order-modal {
+    width: 620px;
+    max-width: calc(100vw - 40px);
+    max-height: 90vh;
+
+    background: #ffffff;
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+    color: #172033;
+}
+
+
+.create-order-modal .modal-header {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 24px 28px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.create-order-modal .modal-header h2 {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    color: #172033;
+}
+
+.create-order-modal .close-button {
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #f1f3f6;
+    color: #374151;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-order-modal .close-button:hover {
+    background: #e5e7eb;
+}
+
+
+.create-order-modal form {
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+}
+
+.create-order-modal .modal-content {
+    min-height: 0;
+
+    flex: 1;
+
+    padding: 26px 28px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    overflow-y: auto;
+}
+
+
+.create-order-modal .modal-content::-webkit-scrollbar {
+    width: 7px;
+}
+
+.create-order-modal .modal-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.create-order-modal .modal-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.create-order-modal .modal-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+
+.create-order-modal .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+.create-order-modal .form-group label {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.create-order-modal .form-group select,
+.create-order-modal .form-group input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #172033;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+}
+
+.create-order-modal .form-group select {
+    cursor: pointer;
+}
+
+.create-order-modal .form-group select:focus,
+.create-order-modal .form-group input:focus {
+    border-color: #172033;
+
+    box-shadow:
+        0 0 0 3px rgba(23, 32, 51, 0.08);
+}
+
+
+.create-order-modal .quantity-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.create-order-modal .quantity-container input {
+    flex: 1;
+}
+
+.create-order-modal .add-product-button {
+    height: 46px;
+
+    padding: 0 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #172033;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.create-order-modal .add-product-button:hover {
+    background: #27334a;
+}
+
+
+.create-order-modal .selected-products {
+    flex-shrink: 0;
+
+    padding: 18px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    background: #f8fafc;
+}
+
+.create-order-modal .selected-products h3 {
+    margin: 0 0 14px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: #374151;
+}
+
+.create-order-modal .empty-products {
+    margin: 0;
+
+    padding: 25px 10px;
+
+    text-align: center;
+
+    color: #9ca3af;
+
+    font-size: 14px;
+}
+
+.create-order-modal .selected-product {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 13px 14px;
+    margin-bottom: 8px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+}
+
+.create-order-modal .selected-product:last-child {
+    margin-bottom: 0;
+}
+
+.create-order-modal .selected-product > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.create-order-modal .selected-product strong {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #172033;
+}
+
+.create-order-modal .selected-product span {
+    font-size: 13px;
+
+    color: #6b7280;
+}
+
+.create-order-modal .remove-product-button {
+    padding: 7px 11px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #fee2e2;
+    color: #dc2626;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.create-order-modal .remove-product-button:hover {
+    background: #fecaca;
+}
+
+
+.create-order-modal .modal-actions {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 18px 28px;
+
+    border-top: 1px solid #e5e7eb;
+
+    background: #ffffff;
+}
+
+.create-order-modal .modal-actions button {
+    height: 44px;
+
+    padding: 0 22px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.create-order-modal .modal-actions .cancel-button {
+    border: 1px solid #e5e7eb;
+
+    background: #ffffff;
+    color: #374151;
+}
+
+.create-order-modal .modal-actions .cancel-button:hover {
+    background: #f9fafb;
+}
+
+.create-order-modal .modal-actions .save-button {
+    border: none;
+
+    background: #31c62e;
+    color: #ffffff;
+}
+
+.create-order-modal .modal-actions .save-button:hover {
+    background: #2d4a27;
+}
+
+
+
+@media (max-width: 600px) {
+
+    .create-order-modal {
+        width: calc(100vw - 24px);
+        max-width: none;
+
+        max-height: 92vh;
+
+        border-radius: 12px;
+    }
+
+    .create-order-modal .modal-header {
+        padding: 20px;
+    }
+
+    .create-order-modal .modal-content {
+        padding: 20px;
+    }
+
+    .create-order-modal .modal-actions {
+        padding: 16px 20px;
+    }
+
+    .create-order-modal .quantity-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .create-order-modal .add-product-button {
+        width: 100%;
+    }
+
+    .create-order-modal .selected-product {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .create-order-modal .remove-product-button {
+        width: 100%;
+    }
+
+    .create-order-modal .modal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .create-order-modal .modal-actions button {
+        width: 100%;
+    }
+}

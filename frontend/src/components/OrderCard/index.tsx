@@ -45,7 +45,6 @@ export default function OrderCard({
                 <button
                     onClick={() => onView(order)}
                     className="view-button"
-                    disabled={order.status !== "PENDING" ? true : false}
                 >
                     Editar Pedido
                 </button>

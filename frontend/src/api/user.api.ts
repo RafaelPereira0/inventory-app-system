@@ -7,6 +7,12 @@ export async function getAllUsersApi() {
     return response.data.result
 }
 
+export async function getAllCustomersApi() {
+    const response = await api.get("/user/customers")
+
+    return response.data.result
+}
+
 export async function createManagerApi(data: CreateUserType) {
     const response = await api.post('/user/create/manager', data)
 
