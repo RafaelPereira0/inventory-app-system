@@ -8,13 +8,13 @@ Uma solução backend robusta, escalável e moderna desenvolvida com o ecossiste
 
 ## 🎯 Objetivos do Projeto
 
-- **Fase 1 (Atual - Controle de Estoque):**
+- **Fase 1 (Controle de Estoque):**
   - Gestão detalhada de inventário e entrada/saída de produtos.
   - Modelagem do banco de dados relacional via **Prisma ORM**.
   - Regras de negócio para alteração de quantidade, categorias e status de estoque.
   - Implementação de testes unitários com **Vitest** para garantir confiabilidade nas movimentações de estoque.
 
-- **Fase 2 (Próxima Etapa - E-Commerce):**
+- **Fase 2 (Fase atual - E-Commerce):**
   - Módulo de autenticação e autorização de clientes/administradores (JWT).
   - Carrinho de compras e motor de pedidos (`OrderService`).
   - Integração com gateways de pagamento (Pix, Cartão de Crédito) e cálculo de frete.
