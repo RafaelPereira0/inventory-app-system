@@ -5,6 +5,7 @@ import App from './App.tsx'
 import { AuthProvider } from './context/AuthContext.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ToastProvider } from './context/ToastContext.tsx'
+import { CartProvider } from './context/CartContext.tsx'
 
 const queryCliente = new QueryClient()
 
@@ -13,7 +14,9 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryCliente}>
       <ToastProvider>
         <AuthProvider>
-          <App />
+          <CartProvider>
+            <App />
+          </CartProvider>
         </AuthProvider>
       </ToastProvider>
     </QueryClientProvider>

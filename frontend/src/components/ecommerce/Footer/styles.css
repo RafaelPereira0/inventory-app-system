@@ -1,0 +1,45 @@
+.store-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 32px;
+    padding: 40px 5%;
+    background: #064e3b;
+    color: white;
+}
+
+.store-footer h3,
+.store-footer h4 {
+    margin-top: 0;
+}
+
+.store-footer p {
+    color: #d1fae5;
+}
+
+.store-footer a {
+    display: block;
+    margin: 8px 0;
+    color: #d1fae5;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .store-header {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .store-search {
+        order: 3;
+        width: 100%;
+    }
+
+    .store-nav {
+        gap: 14px;
+    }
+
+    .store-footer {
+        flex-direction: column;
+    }
+}

@@ -3,8 +3,8 @@ import {
     useCallback,
     useState
 } from "react"
+import Toast from "../components/erp/Toast"
 
-import Toast from "../components/Toast"
 
 interface ToastData {
     id: number

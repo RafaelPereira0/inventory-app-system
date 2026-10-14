@@ -1,9 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-import type { User, AuthContextData } from "../types/auth";
+import type { AuthContextData, User } from "../types/auth";
+import { authLogin } from "../api/auth.api";
 import type { Login } from "../types/login";
 import { setAccessToken } from "../api/token";
-import { authLogin } from "../api/auth.api";
 import { api } from "../api/axios";
+
 
 
 export const AuthContext = createContext({} as AuthContextData)

@@ -6,8 +6,6 @@ import { UserRole } from "../../generated/prisma/enums";
 
 const productRoutes = Router();
 
-productRoutes.use(authMiddleware);
-
 /**
  * @swagger
  * /product/all:
@@ -79,6 +77,7 @@ productRoutes.get(
  */
 productRoutes.get(
     "/:id",
+    authMiddleware,
     productController.findProductById
 );
 
@@ -145,6 +144,7 @@ productRoutes.get(
  */
 productRoutes.post(
     "/create",
+    authMiddleware,
     roleMiddeware(UserRole.ADMIN),
     productController.createProduct
 );
@@ -187,6 +187,7 @@ productRoutes.post(
  */
 productRoutes.post(
     "/:id",
+    authMiddleware,
     roleMiddeware(UserRole.ADMIN),
     productController.deleteProduct
 );
@@ -256,6 +257,7 @@ productRoutes.post(
  */
 productRoutes.put(
     "/:id",
+    authMiddleware,
     roleMiddeware(UserRole.ADMIN),
     productController.updateProduct
 );
