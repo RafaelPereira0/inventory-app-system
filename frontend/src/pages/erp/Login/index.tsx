@@ -25,7 +25,7 @@ export default function Login() {
             if (user?.role === "ADMIN" || user?.role === "MANAGER") {
                 navigate('/erp/dashboard')
             } else {
-                alert("Você não tem permissão para acessar o sistema")
+                navigate('/')
             }
         } catch (err) {
             console.log(err)
@@ -36,7 +36,6 @@ export default function Login() {
         <div className="login-page">
             <div className="login-card">
                 <h1>Inventory System</h1>
-                <p className="login-subtitle">Painel de gerenciamento</p>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
 

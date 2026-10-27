@@ -3,7 +3,7 @@ import { api } from "./axios";
 
 export async function getOrdersApi() {
     const response = await api.get('/order/all')
-    console.log(response)
+    
     return response.data.result
 }
 

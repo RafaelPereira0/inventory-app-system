@@ -9,6 +9,7 @@ import stockMovementRoutes from './routes/stockMovement.route'
 import orderRoutes from './routes/order.route'
 import cookieParser from "cookie-parser"
 import authRoutes from './routes/auth.route'
+import addressRoute from './routes/address.route'
 
 const app = express()
 
@@ -21,11 +22,13 @@ app.use(cors({
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/user",userRoutes)
+app.use("/profile",userRoutes)
 app.use("/login",authRoutes)
 app.use("/category",categoryRoutes)
 app.use("/product", productRoutes)
 app.use("/movement", stockMovementRoutes)
 app.use('/order', orderRoutes)
+app.use('/address', addressRoute)
 
 
 export default app

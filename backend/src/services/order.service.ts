@@ -13,6 +13,16 @@ class OrderService {
 
         if (!user) throw new Error("Usuário não encontrado")
 
+        const address = await prisma.address.findFirst({
+            where: {
+                userId
+            }
+        })
+
+        if (!address) {
+            throw new Error("Cadastre um endereço padrão antes de realizar o pedido");
+        }
+
         let total = 0
         const products: any = []
 
@@ -40,7 +50,15 @@ class OrderService {
                 data: {
                     userId: userId,
                     total: total,
-                    status: "PENDING"
+                    status: "PENDING",
+                    shippingRecipient: address.recipient,
+                    shippingCep: address.cep,
+                    shippingStreet: address.street,
+                    shippingNumber: address.number,
+                    shippingComplement: address.complement,
+                    shippingNeighborhood: address.neighborhood,
+                    shippingCity: address.city,
+                    shippingState: address.state
                 }
             })
 
@@ -160,20 +178,20 @@ class OrderService {
         })
     }
 
-    async update(orderId: number, data: UpdateOrder){
+    async update(orderId: number, data: UpdateOrder) {
         const existsOrder = await prisma.order.findUnique({
             where: {
                 id: orderId
             }
         })
 
-        if(!existsOrder) throw new Error("Pedido não encontrado")
-        if(existsOrder.status === "DELIVERED") throw new Error("Pedido já foi entregue")
-        if(existsOrder.status === "CANCELLED") throw new Error("Pedido já foi cancelado")
-        if(existsOrder.status === "PENDING" && data.status !== "PAID" && data.status !== "CANCELLED") throw new Error("Transição inválida")
-        if(existsOrder.status === "PAID" && data.status !== "DELIVERED" && data.status !== "CANCELLED") throw new Error("Transição inválida")
-        
-        
+        if (!existsOrder) throw new Error("Pedido não encontrado")
+        if (existsOrder.status === "DELIVERED") throw new Error("Pedido já foi entregue")
+        if (existsOrder.status === "CANCELLED") throw new Error("Pedido já foi cancelado")
+        if (existsOrder.status === "PENDING" && data.status !== "PAID" && data.status !== "CANCELLED") throw new Error("Transição inválida")
+        if (existsOrder.status === "PAID" && data.status !== "DELIVERED" && data.status !== "CANCELLED") throw new Error("Transição inválida")
+
+
         const updated = await prisma.order.update({
             where: {
                 id: orderId

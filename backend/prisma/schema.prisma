@@ -33,6 +33,38 @@ enum OrderType {
   CANCELLED
 }
 
+
+enum PaymentMethod {
+  PIX
+  CREDIT_CARD
+  DEBIT_CARD
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+  REFUNDED
+}
+
+model Payment {
+  id                Int           @id @default(autoincrement())
+  orderId           Int
+  method            PaymentMethod
+  status            PaymentStatus @default(PENDING)
+  amount            Decimal
+  provider          String        @default("MERCADO_PAGO")
+  providerPaymentId String?       @unique
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@index([orderId])
+}
+
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -44,6 +76,29 @@ model User {
 
   orders         Order[]
   stockMovements StockMovement[]
+  addresses      Address[]
+}
+
+model Address {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  label        String   @default("Casa")
+  recipient    String
+  cep          String
+  street       String
+  number       String
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  isDefault    Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Category {
@@ -96,10 +151,20 @@ model Order {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
+  shippingRecipient    String?
+  shippingCep          String?
+  shippingStreet       String?
+  shippingNumber       String?
+  shippingComplement   String?
+  shippingNeighborhood String?
+  shippingCity         String?
+  shippingState        String?
+
   user User @relation(fields: [userId], references: [id])
 
-  items OrderItem[]
-  stockMovements  StockMovement[]
+  items          OrderItem[]
+  payments       Payment[]
+  stockMovements StockMovement[]
 }
 
 model OrderItem {

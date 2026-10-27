@@ -3,6 +3,7 @@ import { Search, ShoppingCart, Package, SlidersHorizontal } from "lucide-react";
 import { getProducts } from "../../../hooks/getProducts";
 import "./styles.css";
 import { useCart } from "../../../hooks/useCart";
+import { getCategories } from "../../../hooks/useCategory";
 
 export default function Produtos() {
     const {
@@ -11,14 +12,27 @@ export default function Produtos() {
         isError,
     } = getProducts();
 
-    const {addToCart} = useCart()
+    const {
+        data: category
+    } = getCategories()
+
+
+    const { addToCart } = useCart()
 
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("name");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [quantities, setQuantities] = useState<Record<number, number>>({})
 
     const filteredProducts = (products ?? [])
-        .filter((product) =>
-            product.name.toLowerCase().includes(search.toLowerCase())
+        .filter((product) =>{
+            const matchName = product.name.toLowerCase().includes(search.toLowerCase())
+
+            const matchCategory = selectedCategory === "" ||
+            String(product.category.id) === selectedCategory
+
+            return matchName && matchCategory
+        }
         )
         .sort((a, b) => {
             if (sort === "price-asc") {
@@ -107,6 +121,20 @@ export default function Produtos() {
                             <option value="price-desc">Maior preço</option>
                         </select>
                     </label>
+                    <label className="catalog-sort">
+                        <SlidersHorizontal size={18} />
+                        <select
+                            value={selectedCategory}
+                            onChange={(event) => setSelectedCategory(event.target.value)}
+                        >
+                            <option value="">Todas</option>
+                            {category?.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
                 </div>
 
                 {filteredProducts.length > 0 ? (
@@ -143,24 +171,43 @@ export default function Produtos() {
                                             : "Indisponível"}
                                     </span>
 
-                                    <button
-                                        className="catalog-product-button"
-                                        type="button"
-                                        disabled={product.quantity <= 0}
-                                        onClick={() =>
-                                            addToCart({
-                                                id: product.id,
-                                                name: product.name,
-                                                price: product.price,
-                                                stock: product.quantity
-                                            })
-                                        }
-                                    >
-                                        <ShoppingCart size={17} />
-                                        {product.quantity > 0
-                                            ? "Adicionar ao carrinho"
-                                            : "Sem estoque"}
-                                    </button>
+                                    <div className="catalog-product-actions">
+                                        <button
+                                            className="catalog-product-button"
+                                            type="button"
+                                            disabled={product.quantity <= 0}
+                                            onClick={() =>
+                                                addToCart({
+                                                    id: product.id,
+                                                    name: product.name,
+                                                    price: product.price,
+                                                    stock: product.quantity,
+                                                    quantity: quantities[product.id] ?? 1,
+                                                })
+                                            }
+                                        >
+                                            <ShoppingCart size={17} />
+                                            {product.quantity > 0
+                                                ? "Adicionar ao carrinho"
+                                                : "Sem estoque"}
+                                        </button>
+                                        <input
+                                            type="number"
+                                            className="catalog-quantity-input"
+                                            id={`quantity-${product.id}`}
+                                            min={1}
+                                            max={product.quantity}
+                                            value={quantities[product.id] ?? 1}
+                                            disabled={product.quantity <= 0}
+                                            onChange={(e) => {
+                                                const value = Number(e.target.value);
+                                                setQuantities((prev) => ({
+                                                    ...prev,
+                                                    [product.id]: value
+                                                }));
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </article>
                         ))}

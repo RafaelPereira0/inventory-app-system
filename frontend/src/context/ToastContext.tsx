@@ -53,7 +53,7 @@ export function ToastProvider({
                         (toast) => toast.id !== id
                     )
                 )
-            }, 3000)
+            }, 1500)
         },
         []
     )

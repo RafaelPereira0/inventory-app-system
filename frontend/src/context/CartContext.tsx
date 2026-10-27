@@ -8,11 +8,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const [cart, setCart] = useState<CartItem[]>([])
     const { showToast } = useToast()
 
-    function addToCart(product: Omit<CartItem, "quantity">) {
+    function addToCart(product: CartItem) {
         const existItem = cart.find((item) => item.id === product.id)
         const currentQuantity = existItem?.quantity ?? 0
 
-        if(currentQuantity >= product.stock){
+        if(currentQuantity + product.quantity > product.stock){
             showToast("Estoque insuficiente", "error")
             return
         }
@@ -21,11 +21,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
             if (existItem) {
                 return prevCart.map((item) =>
                     item.id === product.id
-                        ? { ...item, quantity: item.quantity + 1} 
+                        ? { ...item, quantity: item.quantity + product.quantity} 
                         : item
                 );
             }
-            return [...prevCart, { ...product, quantity: 1 }]
+            return [...prevCart, { ...product, quantity: product.quantity ? product.quantity : 1 }]
 
         })
 
@@ -33,12 +33,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
 
     function removeFromCart(id: number) {
+        console.log(`entrou ${id}`)
         setCart((prevCart) => prevCart.filter((item) => item.id !== id))
         showToast("Item removido do carrinho", "success")
     }
 
-    function clearCart() {
+    function clearCart(isFinishing = false) {
         setCart([])
+        if(isFinishing) return showToast("Compra finalizada com sucesso!", "success")
         showToast("Carrinho limpo!", "success")
     }
 

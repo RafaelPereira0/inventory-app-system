@@ -8,12 +8,13 @@ export type CartItem ={
 
 export type CartContextType = {
     cart: CartItem[],
-    addToCart: (product: Omit<CartItem, "quantity">) => void,
+    addToCart: (product: CartItem) => void,
     removeFromCart: (id: number) => void,
-    clearCart: () => void,
+    clearCart: (isFinishg?: boolean) => void,
     totalItems: number
 }
 
 export type CartTypeProps = {
-    product: CartItem[]
+    product: CartItem[],
+    removeItem: (id:number) => void
 }

@@ -12,9 +12,10 @@ import Stock from "../pages/erp/Stocks";
 import Users from "../pages/erp/Users";
 import Orders from "../pages/erp/Orders";
 import EcommerceLayout from "../components/ecommerce/Layout";
-import Home from "../components/ecommerce/Home";
-import Produtos from "../components/ecommerce/Products"
-import Carrinho from "../components/ecommerce/Cart";
+import Produtos from "../pages/ecommerce/Products"
+import Carrinho from "../pages/ecommerce/Cart";
+import Home from "../pages/ecommerce/Home";
+import Profile from "../pages/ecommerce/Profile";
 
 
 export default function AppRoutes() {
@@ -22,11 +23,12 @@ export default function AppRoutes() {
         <BrowserRouter>
             <Routes>
                 {/* Login do ERP */}
-                <Route path="/login/erp" element={<Login />} />
+                <Route path="/login" element={<Login />} />
 
                 {/* Loja virtual */}
                 <Route element={<EcommerceLayout />}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="/produtos" element={<Produtos/>}/>
                     <Route path="/carrinho" element={<Carrinho/>}/>
                 </Route>

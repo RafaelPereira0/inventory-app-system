@@ -188,6 +188,84 @@ font-size: 14px;
 color: #9ca3af;
 }
 
+/* Container que alinha o botão e o input lado a lado */
+.catalog-product-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    width: 100%;
+}
+
+
+.catalog-product-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 14px;
+    background-color: #0d7a5f;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.catalog-product-button:hover:not(:disabled) {
+    background-color: #0a634c;
+}
+
+.catalog-product-button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.catalog-product-actions input[type="number"].catalog-quantity-input {
+    width: 60px;
+    height: 38px;
+    box-sizing: border-box;
+    padding: 4px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.catalog-product-actions input[type="number"].catalog-quantity-input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgb(37 99 235 / 12%);
+}
+
+.catalog-product-actions input[type="number"].catalog-quantity-input:disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+    .catalog-product-actions {
+        gap: 6px;
+    }
+
+    .catalog-product-button {
+        font-size: 12px;
+        padding: 0 6px;
+    }
+
+    .catalog-product-actions input[type="number"].catalog-quantity-input {
+        width: 52px;
+    }
+}
+
 
 .catalog-grid {
 display: grid;

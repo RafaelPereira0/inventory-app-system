@@ -1,0 +1,126 @@
+.cart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.cart-product-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+}
+
+.cart-product-card:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06);
+}
+
+.cart-product-image-container {
+    background-color: #f0fdf4;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.cart-product-icon {
+    color: #0d7a5f;
+}
+
+.cart-product-info {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.cart-product-category {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #6b7280;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.cart-product-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 4px 0;
+}
+
+.cart-product-price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0d7a5f;
+    margin-bottom: 2px;
+}
+
+.cart-product-qty-label {
+    font-size: 0.85rem;
+    color: #4b5563;
+    margin-bottom: 12px;
+}
+
+.cart-product-qty-label strong {
+    color: #111827;
+}
+
+.cart-product-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    width: 100%;
+}
+
+.cart-product-checkout-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: #0d7a5f;
+    color: #ffffff;
+    border: none;
+    padding: 10px 8px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cart-product-checkout-button:hover {
+    background-color: #0a634c;
+}
+
+.cart-product-remove-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+    padding: 10px 8px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cart-product-remove-button:hover {
+    background-color: #dc2626;
+    color: #ffffff;
+    border-color: #dc2626;
+}
