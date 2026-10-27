@@ -3,11 +3,17 @@ import { useCart } from "../../../hooks/useCart";
 import ProductCardCart from "../../../components/ecommerce/ProductCardCart";
 import PaymentModal from "../../../components/ecommerce/PaymentModal";
 import './styles.css'
+import { createOrder } from "../../../hooks/useOrders";
+import { useAuth } from "../../../hooks/useAuth";
+import { useToast } from "../../../hooks/useToast";
 
 export default function Carrinho() {
     const { cart, removeFromCart, clearCart } = useCart();
+    const {user} = useAuth()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("pix");
+    const createUserOrder = createOrder()
+    const {showToast} = useToast()
 
     const totalCartPrice = cart.reduce(
         (total, item) => total + item.price * item.quantity,
@@ -16,8 +22,25 @@ export default function Carrinho() {
 
     function handleFinishOrder(e: React.FormEvent) {
         e.preventDefault();
-        clearCart(true);
-        setIsModalOpen(false);
+        
+        const orderData = {
+            items: cart.map(item => ({
+                productId: item.id,
+                quantity: item.quantity
+            })
+        ), userId: user!.id
+        }
+
+        createUserOrder.mutate(orderData, {
+            onSuccess: () => {
+                showToast("Pedido realizado com sucesso", "success")
+                clearCart(true)
+                setIsModalOpen(false)
+            },
+            onError: () => {
+                showToast("Erro ao realizar pedido", "error")
+            }
+        })
     }
 
     return (

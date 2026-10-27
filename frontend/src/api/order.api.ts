@@ -7,6 +7,12 @@ export async function getOrdersApi() {
     return response.data.result
 }
 
+export async function getUserOrder() {
+    const response = await api.get(`/order/me`)
+    
+    return response.data.result
+}
+
 export async function updateOrderApi(id: number, data: UpdateOrderType) {
     const response = await api.put(`order/${id}`, data)
     

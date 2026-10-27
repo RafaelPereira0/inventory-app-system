@@ -13,7 +13,7 @@ import { useAuth } from "../../../hooks/useAuth";
 
 export default function Header() {
     const { totalItems } = useCart();
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
 
     const [accountOpen, setAccountOpen] = useState(false);
     const accountRef = useRef<HTMLDivElement>(null);
@@ -111,7 +111,7 @@ export default function Header() {
                                         type="button"
                                         onClick={() => {
                                             setAccountOpen(false);
-                                            navigate("/login");
+                                            logout()
                                         }}
                                     >
                                         Sair

@@ -33,6 +33,23 @@ class AddressLookupService {
         const user = await prisma.user.findUnique({
             where: {id: userId}
         })
+
+        const existsAddress = await prisma.address.findFirst({
+            where: {
+                userId
+            }
+        })
+
+        if(existsAddress){
+            return await prisma.address.update({
+                where: {
+                    id: existsAddress.id
+                }, data: {
+                    ...validatedAddress
+                }
+            })
+        }
+
         return await prisma.address.create({
             data: {
                 ...validatedAddress,

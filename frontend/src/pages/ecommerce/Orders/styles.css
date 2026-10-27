@@ -1,0 +1,127 @@
+.orders-page-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.orders-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 24px;
+}
+
+.orders-loading, .orders-error, .orders-empty-box {
+    text-align: center;
+    color: #6b7280;
+    font-size: 1rem;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Estilos do Card */
+.order-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: box-shadow 0.2s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.order-id {
+    display: block;
+    font-weight: 700;
+    color: #111827;
+    font-size: 1.05rem;
+}
+
+.order-date {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.order-payment {
+    background-color: #f0fdf4;
+    color: #0d7a5f;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.orders-page-container {
+    max-width: 1200px; /* Aumentado para dar espaço aos cards lado a lado */
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.order-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.order-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: #d1d5db;
+}
+
+.order-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.order-item-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #374151;
+}
+
+.order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 12px;
+    font-size: 0.95rem;
+    color: #4b5563;
+}
+
+.order-total {
+    color: #0d7a5f;
+    font-size: 1.1rem;
+    font-weight: 700;
+}

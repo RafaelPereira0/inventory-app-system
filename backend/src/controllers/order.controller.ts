@@ -16,6 +16,18 @@ class OrderController {
         }
     }
 
+    async findUserOrder(req: Request, res: Response){
+        try{
+            const userId = req.user!.id
+
+            const userOrders = await orderService.findOrdersUser(userId)
+
+            return res.status(200).json({message: "Pedidos encontrados", result: userOrders})
+        }catch(err: any){
+            return res.status(400).json({error: err.message})
+        }
+    }
+
     async findAllOrders(req: Request, res: Response) {
         try {
             const orders = await orderService.findAll()

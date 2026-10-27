@@ -13,6 +13,22 @@ export interface OrderType {
     items: OrderItemType[]
 }
 
+export interface Order {
+    id: number;
+    status: string;
+    total: number;
+    createdAt: string;
+    shippingRecipient: string;
+    shippingCep: string;
+    shippingStreet: string;
+    shippingNumber: string;
+    shippingComplement?: string;
+    shippingNeighborhood: string;
+    shippingCity: string;
+    shippingState: string;
+    items: OrderItemType[];
+}
+
 export interface OrderItemType {
     quantity: number
     price: number

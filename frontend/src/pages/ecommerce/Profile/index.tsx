@@ -138,13 +138,6 @@ export default function Profile() {
         setIsEditingProfile(false);
     }
 
-    function handleCancelAddress() {
-        // Quando conectarmos a API, usaremos o endereço salvo no banco.
-        setAddressForm({ ...emptyAddress });
-
-        setIsEditingAddress(false);
-    }
-
     function handleSaveProfile(
         e: React.FormEvent<HTMLFormElement>
     ) {
@@ -483,10 +476,18 @@ export default function Profile() {
                                 <button
                                     type="button"
                                     className="profile-cancel-button"
-                                    onClick={handleCancelAddress}
+                                    onClick={() => setIsEditingAddress(false)}
                                 >
                                     <X size={17} />
                                     Cancelar
+                                </button>
+                                <button
+                                    type="button"
+                                    className="profile-cancel-button"
+                                    onClick={() => setAddressForm(emptyAddress)}
+                                >
+                                    <X size={17} />
+                                    Limpar endereço
                                 </button>
 
                                 <button

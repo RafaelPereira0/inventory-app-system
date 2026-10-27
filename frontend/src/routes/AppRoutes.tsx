@@ -16,6 +16,7 @@ import Produtos from "../pages/ecommerce/Products"
 import Carrinho from "../pages/ecommerce/Cart";
 import Home from "../pages/ecommerce/Home";
 import Profile from "../pages/ecommerce/Profile";
+import Pedidos from "../pages/ecommerce/Orders";
 
 
 export default function AppRoutes() {
@@ -31,6 +32,7 @@ export default function AppRoutes() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/produtos" element={<Produtos/>}/>
                     <Route path="/carrinho" element={<Carrinho/>}/>
+                    <Route path="/meus-pedidos" element={<Pedidos/>}/>
                 </Route>
 
                 {/* Área administrativa */}

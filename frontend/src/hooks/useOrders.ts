@@ -1,12 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { CreateOrderType, OrderType, UpdateOrderType } from "../types/order";
-import { cancelOrderApi, createOrderApi, getOrdersApi, updateOrderApi } from "../api/order.api";
+import type { CreateOrderType, Order, OrderType, UpdateOrderType } from "../types/order";
+import { cancelOrderApi, createOrderApi, getOrdersApi, getUserOrder, updateOrderApi } from "../api/order.api";
 
 export function getOrders() {
 
     const data = useQuery<OrderType[]>({
         queryKey: ['orders'],
         queryFn: getOrdersApi
+    })
+
+    return data
+}
+
+export function getUserOrders(){
+    const data = useQuery<Order[]>({
+        queryKey: ['userOrder'],
+        queryFn: getUserOrder
     })
 
     return data

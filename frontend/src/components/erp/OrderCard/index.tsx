@@ -4,7 +4,6 @@ import "./styles.css"
 
 export default function OrderCard({
     order,
-    onView
 }: OrderCardProps) {
     const total = order.items.reduce(
         (acc, item) => acc + Number(item.price) * item.quantity,
@@ -40,18 +39,6 @@ export default function OrderCard({
                 </div>
 
             </div>
-
-            <div className="order-actions">
-
-                <button
-                    onClick={() => onView(order)}
-                    className="view-button"
-                >
-                    Editar Pedido
-                </button>
-
-            </div>
-
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { authLogin } from "../api/auth.api";
 import type { Login } from "../types/login";
 import { setAccessToken } from "../api/token";
 import { api } from "../api/axios";
+import { useToast } from "../hooks/useToast";
 
 
 
@@ -13,7 +14,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null)
     const [token, setToken] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
-
+    const {showToast} = useToast()
     const isAuthenticated = !!token
 
     const login = async (credentials: Login) => {
@@ -24,7 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(user)
         setToken(accessToken)
         setAccessToken(accessToken)
-
+        showToast("Login com sucesso", "success")
         return user
     }
 
@@ -33,6 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(null)
         setToken(null)
         setAccessToken(null)
+        showToast("Deslogado com sucesso", "success")
     }
 
     async function restore() {

@@ -66,6 +66,8 @@ orderRoutes.get(
     orderController.findAllOrders
 );
 
+orderRoutes.get("/me", orderController.findUserOrder)
+
 /**
  * @swagger
  * /order/{id}:

@@ -128,6 +128,27 @@ class OrderService {
         return existsOrder
     }
 
+    async findOrdersUser(userId: number){
+        const orders = await prisma.order.findMany({
+            where: {
+                userId
+            },include: {
+                items: {
+                    include: {
+                        product: true
+                    }
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+
+        if(!orders) throw new Error("Nenhum pedido encontrado deste usuário")
+
+        return orders
+    }
+
     async cancelOrder(orderId: number, userId: number) {
         const existsOrder = await this.findById(orderId)
 
